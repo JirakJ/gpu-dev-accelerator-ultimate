@@ -1,0 +1,143 @@
+<idea-plugin>
+    <id>com.jakubjirak.gpudev.ultimate</id>
+    <name>GPU Dev Accelerator Ultimate</name>
+    <vendor email="support@jakubjirak.com" url="https://jakubjirak.com">Jakub Jirak</vendor>
+    
+    <product-descriptor code="PGPUDEVACCELERA" release-date="20251116" release-version="20251"/>
+
+    <description><![CDATA[
+    <h1>GPU Dev Accelerator Ultimate - Professional GPU Development IDE</h1>
+    <p>The most advanced cross-platform GPU development environment for CUDA, Metal, OpenCL, and Vulkan.</p>
+    
+    <h2>🚀 Features</h2>
+    <ul>
+        <li><b>CUDA Development</b>: Full cuda-gdb integration, syntax highlighting, code completion</li>
+        <li><b>Metal Shading Language</b>: Complete Metal shader IDE with debugging outside Xcode</li>
+        <li><b>Advanced Profiling</b>: nvprof, Nsight Compute, Metal Performance Shaders integration</li>
+        <li><b>Memory Analysis</b>: cuda-memcheck, memory leak detection, allocation tracking</li>
+        <li><b>Multi-GPU Support</b>: Workload distribution visualization and optimization</li>
+        <li><b>AI-Powered Optimization</b>: Kernel performance suggestions and auto-optimization</li>
+        <li><b>Cross-API Workflow</b>: Seamless development across CUDA/Metal/OpenCL/Vulkan</li>
+    </ul>
+    
+    <h2>💎 Premium Features</h2>
+    <ul>
+        <li>Advanced debugging with breakpoints, watchpoints, and step execution</li>
+        <li>Real-time performance profiling with flame graphs</li>
+        <li>Automated kernel optimization recommendations</li>
+        <li>Multi-GPU topology visualization</li>
+        <li>Enterprise team collaboration features</li>
+    </ul>
+    
+    <h2>🆓 Free Tier Includes</h2>
+    <ul>
+        <li>CUDA and Metal syntax highlighting</li>
+        <li>Basic code completion</li>
+        <li>Simple compilation support</li>
+        <li>Community forum access</li>
+    </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <h3>Version 2025.1.1</h3>
+        <ul>
+            <li>Added freemium pricing model with product code PGPUDEVACCELERA</li>
+            <li>Initial release with full CUDA and Metal support</li>
+            <li>Advanced debugging and profiling capabilities</li>
+            <li>AI-powered kernel optimization</li>
+            <li>Multi-GPU workload visualization</li>
+        </ul>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- File Types -->
+        <fileType name="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaFileType" 
+                  fieldName="INSTANCE" language="CUDA" extensions="cu;cuh"/>
+        <fileType name="Metal" implementationClass="com.gpudev.accelerator.metal.MetalFileType" 
+                  fieldName="INSTANCE" language="Metal" extensions="metal"/>
+        <fileType name="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLFileType" 
+                  fieldName="INSTANCE" language="OpenCL" extensions="cl"/>
+        
+        <!-- Languages -->
+        <lang.parserDefinition language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaParserDefinition"/>
+        <lang.parserDefinition language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalParserDefinition"/>
+        <lang.parserDefinition language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLParserDefinition"/>
+        
+        <!-- Syntax Highlighting -->
+        <lang.syntaxHighlighterFactory language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLSyntaxHighlighterFactory"/>
+        
+        <!-- Code Completion -->
+        <completion.contributor language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaCompletionContributor"/>
+        <completion.contributor language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalCompletionContributor"/>
+        
+        <!-- Debugger -->
+        <programRunner implementation="com.gpudev.accelerator.debugger.CudaDebugRunner"/>
+        <xdebugger.breakpointType implementation="com.gpudev.accelerator.debugger.CudaLineBreakpointType"/>
+        
+        <!-- Profiler -->
+        <toolWindow id="GPU Profiler" anchor="bottom" icon="/icons/profiler.svg"
+                    factoryClass="com.gpudev.accelerator.profiler.ProfilerToolWindowFactory"/>
+        
+        <!-- Settings -->
+        <applicationConfigurable parentId="tools" 
+                                 instance="com.gpudev.accelerator.settings.GPUDevSettingsConfigurable"
+                                 id="com.gpudev.accelerator.settings"
+                                 displayName="GPU Dev Accelerator"/>
+        
+        <!-- Inspections -->
+        <localInspection language="CUDA" shortName="CudaMemoryLeak"
+                        bundle="messages.GPUDevBundle"
+                        key="inspection.cuda.memory.leak"
+                        groupName="CUDA"
+                        enabledByDefault="true"
+                        level="WARNING"
+                        implementationClass="com.gpudev.accelerator.inspections.CudaMemoryLeakInspection"/>
+        
+        <localInspection language="CUDA" shortName="CudaKernelOptimization"
+                        bundle="messages.GPUDevBundle"
+                        key="inspection.cuda.kernel.optimization"
+                        groupName="CUDA"
+                        enabledByDefault="true"
+                        level="WEAK WARNING"
+                        implementationClass="com.gpudev.accelerator.inspections.CudaKernelOptimizationInspection"/>
+        
+        <!-- Run Configurations -->
+        <configurationType implementation="com.gpudev.accelerator.run.CudaConfigurationType"/>
+        <configurationType implementation="com.gpudev.accelerator.run.MetalConfigurationType"/>
+        
+        <!-- License -->
+        <applicationService serviceImplementation="com.gpudev.accelerator.license.LicenseManager"/>
+    </extensions>
+
+    <actions>
+        <group id="GPUDev.MainMenu" text="GPU Dev" description="GPU Development Tools">
+            <add-to-group group-id="MainMenu" anchor="before" relative-to-action="HelpMenu"/>
+            
+            <action id="GPUDev.CompileCuda" class="com.gpudev.accelerator.actions.CompileCudaAction"
+                    text="Compile CUDA" description="Compile CUDA source files">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>
+            </action>
+            
+            <action id="GPUDev.ProfileKernel" class="com.gpudev.accelerator.actions.ProfileKernelAction"
+                    text="Profile Kernel" description="Profile GPU kernel performance">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt P"/>
+            </action>
+            
+            <action id="GPUDev.OptimizeKernel" class="com.gpudev.accelerator.actions.OptimizeKernelAction"
+                    text="AI Optimize Kernel" description="Get AI-powered optimization suggestions">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt O"/>
+            </action>
+            
+            <action id="GPUDev.ShowGPUInfo" class="com.gpudev.accelerator.actions.ShowGPUInfoAction"
+                    text="GPU Information" description="Show available GPU devices"/>
+            
+            <action id="GPUDev.MemoryCheck" class="com.gpudev.accelerator.actions.MemoryCheckAction"
+                    text="Memory Check" description="Run cuda-memcheck"/>
+        </group>
+    </actions>
+</idea-plugin>
