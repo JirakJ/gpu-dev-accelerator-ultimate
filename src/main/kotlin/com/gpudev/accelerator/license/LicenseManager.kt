@@ -99,6 +99,10 @@ class LicenseManager : PersistentStateComponent<LicenseManager.State> {
         return LocalDate.now().isBefore(expirationDate)
     }
     
+    fun hasValidLicense(): Boolean {
+        return state.licenseType != LicenseType.FREE && isLicenseValid()
+    }
+    
     fun getDaysUntilExpiration(): Long {
         if (state.licenseType == LicenseType.FREE) return Long.MAX_VALUE
         if (state.expirationDate.isEmpty()) return 0
