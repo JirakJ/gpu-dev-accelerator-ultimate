@@ -76,5 +76,9 @@ class PremiumFeatureGate(private val project: Project) {
     
     companion object {
         fun getInstance(project: Project): PremiumFeatureGate = project.service()
+        
+        fun isPremiumEnabled(project: Project): Boolean {
+            return getInstance(project).checkFeature(Feature.ADVANCED_DEBUGGING)
+        }
     }
 }
