@@ -112,32 +112,68 @@
         
         <!-- License -->
         <applicationService serviceImplementation="com.gpudev.accelerator.license.LicenseManager"/>
+        
+        <!-- Premium Features -->
+        <projectService serviceImplementation="com.gpudev.accelerator.premium.PremiumFeatureGate"/>
     </extensions>
 
     <actions>
         <group id="GPUDev.MainMenu" text="GPU Dev" description="GPU Development Tools">
             <add-to-group group-id="MainMenu" anchor="before" relative-to-action="HelpMenu"/>
             
+            <!-- Free Features -->
             <action id="GPUDev.CompileCuda" class="com.gpudev.accelerator.actions.CompileCudaAction"
                     text="Compile CUDA" description="Compile CUDA source files">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>
             </action>
             
-            <action id="GPUDev.ProfileKernel" class="com.gpudev.accelerator.actions.ProfileKernelAction"
-                    text="Profile Kernel" description="Profile GPU kernel performance">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt P"/>
-            </action>
-            
-            <action id="GPUDev.OptimizeKernel" class="com.gpudev.accelerator.actions.OptimizeKernelAction"
-                    text="AI Optimize Kernel" description="Get AI-powered optimization suggestions">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt O"/>
-            </action>
-            
             <action id="GPUDev.ShowGPUInfo" class="com.gpudev.accelerator.actions.ShowGPUInfoAction"
                     text="GPU Information" description="Show available GPU devices"/>
             
+            <separator/>
+            
+            <!-- Premium Features -->
+            <group id="GPUDev.PremiumFeatures" text="Premium Features" description="Professional GPU Development Tools" popup="true">
+                <action id="GPUDev.AdvancedDebug" class="com.gpudev.accelerator.actions.AdvancedDebugAction"
+                        text="Advanced CUDA Debug 💎" description="Start advanced debugging with cuda-gdb">
+                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt D"/>
+                </action>
+                
+                <action id="GPUDev.ProfileWithFlameGraph" class="com.gpudev.accelerator.actions.ProfileWithFlameGraphAction"
+                        text="Profile with Flame Graph 💎" description="Real-time profiling with flame graphs">
+                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt P"/>
+                </action>
+                
+                <action id="GPUDev.AIOptimizeKernel" class="com.gpudev.accelerator.actions.AIOptimizeKernelAction"
+                        text="AI Optimize Kernel 💎" description="Get AI-powered optimization suggestions">
+                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt O"/>
+                </action>
+                
+                <action id="GPUDev.VisualizeMultiGPU" class="com.gpudev.accelerator.actions.VisualizeMultiGPUAction"
+                        text="Multi-GPU Topology 💎" description="Visualize GPU topology and workload distribution">
+                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/>
+                </action>
+                
+                <action id="GPUDev.AdvancedMemoryCheck" class="com.gpudev.accelerator.actions.AdvancedMemoryCheckAction"
+                        text="Advanced Memory Analysis 💎" description="Detect memory leaks and race conditions">
+                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt M"/>
+                </action>
+            </group>
+            
+            <separator/>
+            
             <action id="GPUDev.MemoryCheck" class="com.gpudev.accelerator.actions.MemoryCheckAction"
-                    text="Memory Check" description="Run cuda-memcheck"/>
+                    text="Basic Memory Check" description="Run basic cuda-memcheck"/>
+            
+            <action id="GPUDev.OptimizeKernel" class="com.gpudev.accelerator.actions.OptimizeKernelAction"
+                    text="Basic Kernel Optimization" description="Get basic optimization suggestions">
+                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift O"/>
+            </action>
+            
+            <action id="GPUDev.ProfileKernel" class="com.gpudev.accelerator.actions.ProfileKernelAction"
+                    text="Basic Profiling" description="Profile GPU kernel performance">
+                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift P"/>
+            </action>
         </group>
     </actions>
 </idea-plugin>
