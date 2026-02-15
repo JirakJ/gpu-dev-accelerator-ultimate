@@ -6,37 +6,35 @@
     <product-descriptor code="PGPUDEVACCELERA" release-date="20260215" release-version="20262" optional="true"/>
 
     <description><![CDATA[
-    <h1>GPU Dev Accelerator Ultimate - Professional GPU Development IDE</h1>
-    <p>The most advanced cross-platform GPU development environment for CUDA, Metal, OpenCL, and Vulkan.</p>
-    
-    <h2>🚀 Features</h2>
-    <ul>
-        <li><b>CUDA Development</b>: Full cuda-gdb integration, syntax highlighting, code completion</li>
-        <li><b>Metal Shading Language</b>: Complete Metal shader IDE with debugging outside Xcode</li>
-        <li><b>Advanced Profiling</b>: nvprof, Nsight Compute, Metal Performance Shaders integration</li>
-        <li><b>Memory Analysis</b>: cuda-memcheck, memory leak detection, allocation tracking</li>
-        <li><b>Multi-GPU Support</b>: Workload distribution visualization and optimization</li>
-        <li><b>AI-Powered Optimization</b>: Kernel performance suggestions and auto-optimization</li>
-        <li><b>Cross-API Workflow</b>: Seamless development across CUDA/Metal/OpenCL/Vulkan</li>
-    </ul>
-    
-    <h2>💎 Premium Features</h2>
-    <ul>
-        <li>Advanced debugging with breakpoints, watchpoints, and step execution</li>
-        <li>Real-time performance profiling with flame graphs</li>
-        <li>Automated kernel optimization recommendations</li>
-        <li>Multi-GPU topology visualization</li>
-        <li>Enterprise team collaboration features</li>
-    </ul>
-    
-    <h2>🆓 Free Tier Includes</h2>
-    <ul>
-        <li>CUDA and Metal syntax highlighting</li>
-        <li>Basic code completion</li>
-        <li>Simple compilation support</li>
-        <li>Community forum access</li>
-    </ul>
-    ]]></description>
+<h2>GPU Dev Accelerator Ultimate</h2>
+<p>
+  The ultimate GPU development toolkit for JetBrains IDEs. GPU Dev Accelerator Ultimate delivers full IDE
+  support for CUDA, Metal, OpenCL, and Vulkan Compute — including syntax highlighting, debugging, profiling,
+  and AI-powered kernel optimization across all major GPU platforms.
+</p>
+
+<h2>Key Features</h2>
+<ul>
+  <li><b>Multi-Platform GPU Support</b> — CUDA, Metal Shading Language, OpenCL, and Vulkan Compute</li>
+  <li><b>Advanced Debugging</b> — Integrated cuda-gdb, thread-level inspection, memory error detection</li>
+  <li><b>Performance Profiling</b> — nvprof, Nsight Compute, and Metal Performance Shaders integration</li>
+  <li><b>Memory Analysis</b> — GPU memory leak detection and allocation tracking</li>
+  <li><b>AI Kernel Optimization</b> — Intelligent suggestions for occupancy, memory coalescing, and warp divergence</li>
+  <li><b>Multi-GPU Topology</b> — Visualize and target specific GPU devices</li>
+</ul>
+
+<h2>Why GPU Dev Accelerator Ultimate?</h2>
+<p>
+  GPU development has been stuck in command-line workflows for too long. This plugin brings the full power
+  of modern IDE features to GPU programming — making kernel development as productive as CPU code.
+</p>
+
+<h2>Free vs Pro</h2>
+<ul>
+  <li><b>Free:</b> Syntax highlighting, basic code completion, compilation support for all GPU platforms</li>
+  <li><b>Pro:</b> Advanced debugging, profiler integration, AI kernel optimization, memory analysis, multi-GPU topology, warp divergence analysis, and team collaboration features</li>
+</ul>
+]]></description>
 
     <change-notes><![CDATA[
         <h3>Version 2025.1.1</h3>
