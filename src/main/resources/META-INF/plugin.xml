@@ -6,44 +6,82 @@
     <product-descriptor code="PGPUDEVACCELERA" release-date="20260215" release-version="20262" optional="true"/>
 
     <description><![CDATA[
-<h2>GPU Dev Accelerator Ultimate</h2>
+<h2>GPU Dev Accelerator Ultimate — Cross-Platform CUDA, Metal, and OpenCL Development</h2>
+
 <p>
-  The ultimate GPU development toolkit for JetBrains IDEs. GPU Dev Accelerator Ultimate delivers full IDE
-  support for CUDA, Metal, OpenCL, and Vulkan Compute — including syntax highlighting, debugging, profiling,
-  and AI-powered kernel optimization across all major GPU platforms.
+The most advanced JetBrains plugin for GPU programming. Write, debug, profile, and optimize CUDA, Metal, and OpenCL code in a unified, modern IDE environment — no more switching between fragmented tools.
 </p>
 
-<h2>Key Features</h2>
+<h3>GPU Language Support</h3>
 <ul>
-  <li><b>Multi-Platform GPU Support</b> — CUDA, Metal Shading Language, OpenCL, and Vulkan Compute</li>
-  <li><b>Advanced Debugging</b> — Integrated cuda-gdb, thread-level inspection, memory error detection</li>
-  <li><b>Performance Profiling</b> — nvprof, Nsight Compute, and Metal Performance Shaders integration</li>
-  <li><b>Memory Analysis</b> — GPU memory leak detection and allocation tracking</li>
-  <li><b>AI Kernel Optimization</b> — Intelligent suggestions for occupancy, memory coalescing, and warp divergence</li>
-  <li><b>Multi-GPU Topology</b> — Visualize and target specific GPU devices</li>
+  <li>Full CUDA C/C++ syntax highlighting with kernel launch assistance</li>
+  <li>Complete Metal Shading Language support for iOS and macOS</li>
+  <li>OpenCL C syntax highlighting and kernel compilation</li>
+  <li>Context-aware code completion for all GPU APIs</li>
+  <li>Dedicated file types: .cu, .cuh, .metal, .cl</li>
 </ul>
 
-<h2>Why GPU Dev Accelerator Ultimate?</h2>
-<p>
-  GPU development has been stuck in command-line workflows for too long. This plugin brings the full power
-  of modern IDE features to GPU programming — making kernel development as productive as CPU code.
-</p>
-
-<h2>Free vs Pro</h2>
+<h3>Debugging and Profiling</h3>
 <ul>
-  <li><b>Free:</b> Syntax highlighting, basic code completion, compilation support for all GPU platforms</li>
-  <li><b>Pro:</b> Advanced debugging, profiler integration, AI kernel optimization, memory analysis, multi-GPU topology, warp divergence analysis, and team collaboration features</li>
+  <li>Integrated cuda-gdb debugger with breakpoints inside GPU kernels</li>
+  <li>Thread-level inspection and memory error detection</li>
+  <li>nvprof and Nsight Compute profiling integration</li>
+  <li>Flame graph visualization for performance hotspots</li>
+  <li>Metal Performance Shaders framework integration</li>
 </ul>
-]]></description>
+
+<h3>Optimization and Analysis</h3>
+<ul>
+  <li>AI-powered kernel optimization suggestions</li>
+  <li>GPU memory leak detection with cuda-memcheck</li>
+  <li>Occupancy analysis and warp divergence detection</li>
+  <li>Multi-GPU topology visualization and workload distribution</li>
+  <li>Real-time code inspections for GPU programming mistakes</li>
+</ul>
+
+<h3>Productivity Features</h3>
+<ul>
+  <li>CUDA and Metal run configurations</li>
+  <li>GPU device information panel</li>
+  <li>Keyboard shortcuts for compile (Ctrl+Alt+C), profile (Ctrl+Alt+P), and optimize (Ctrl+Alt+O)</li>
+</ul>
+
+<h3>Pricing</h3>
+<ul>
+  <li><b>Free:</b> Syntax highlighting, basic completion, and compilation for all GPU platforms</li>
+  <li><b>Individual ($200–400/year):</b> Advanced debugging, profiler integration, AI optimization, memory analysis</li>
+  <li><b>Enterprise ($500–2,000/year per seat):</b> Team collaboration, multi-GPU visualization, priority support, volume licensing</li>
+</ul>
+
+<h3>Requirements</h3>
+<ul>
+  <li>IntelliJ IDEA 2024.3+ or CLion 2024.3+</li>
+  <li>NVIDIA CUDA Toolkit (for CUDA features)</li>
+  <li>macOS (for Metal features)</li>
+  <li>Java 17+</li>
+</ul>
+
+<h3>Support</h3>
+<ul>
+  <li>Documentation: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/wiki">GitHub Wiki</a></li>
+  <li>Community Forum: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/discussions">GitHub Discussions</a></li>
+  <li>Enterprise Support: support@jakubjirak.com</li>
+  <li>Issues: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/issues">GitHub Issues</a></li>
+</ul>
+    ]]></description>
 
     <change-notes><![CDATA[
-        <h3>Version 2025.1.1</h3>
+        <h3>What's New</h3>
         <ul>
-            <li>Added freemium pricing model with product code PGPUDEVACCELERA</li>
-            <li>Initial release with full CUDA and Metal support</li>
-            <li>Advanced debugging and profiling capabilities</li>
-            <li>AI-powered kernel optimization</li>
-            <li>Multi-GPU workload visualization</li>
+            <li><b>CUDA Development</b> - Full CUDA C/C++ syntax highlighting, code completion, and kernel launch assistance</li>
+            <li><b>Metal Shading Language</b> - Complete Metal support for iOS and macOS GPU development</li>
+            <li><b>OpenCL Support</b> - Syntax highlighting and kernel compilation for cross-vendor GPU code</li>
+            <li><b>GPU Debugging</b> - Integrated cuda-gdb debugger with thread-level inspection and breakpoints</li>
+            <li><b>Performance Profiling</b> - nvprof and Nsight Compute integration with flame graph visualization</li>
+            <li><b>AI Kernel Optimization</b> - Intelligent suggestions for occupancy, memory coalescing, and warp divergence</li>
+            <li><b>Memory Analysis</b> - GPU memory leak detection and allocation tracking with cuda-memcheck</li>
+            <li><b>Multi-GPU Topology</b> - Visualize GPU devices and distribute workloads across multiple GPUs</li>
+            <li><b>Code Inspections</b> - Real-time warnings for memory leaks and kernel optimization opportunities</li>
         </ul>
     ]]></change-notes>
 
