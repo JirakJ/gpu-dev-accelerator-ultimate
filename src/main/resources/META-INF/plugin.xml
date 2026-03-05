@@ -3,10 +3,9 @@
     <name>GPU Dev Accelerator Ultimate</name>
     <vendor email="support@jakubjirak.com" url="https://jakubjirak.com">Jakub Jirak</vendor>
     
-    <product-descriptor code="PGPUDEVACCELERA" release-date="20260215" release-version="20262" optional="true"/>
+    <product-descriptor code="PGPUDEVACCELERA" release-date="20260215" release-version="20262" />
 
-    <description><![CDATA[
-<h2>GPU Dev Accelerator Ultimate — Cross-Platform CUDA, Metal, and OpenCL Development</h2>
+    <description><![CDATA[<h2>GPU Dev Accelerator Ultimate — Cross-Platform CUDA, Metal, and OpenCL Development</h2>
 
 <p>
 The most advanced JetBrains plugin for GPU programming. Write, debug, profile, and optimize CUDA, Metal, and OpenCL code in a unified, modern IDE environment — no more switching between fragmented tools.
@@ -46,13 +45,6 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
   <li>Keyboard shortcuts for compile (Ctrl+Alt+C), profile (Ctrl+Alt+P), and optimize (Ctrl+Alt+O)</li>
 </ul>
 
-<h3>Pricing</h3>
-<ul>
-  <li><b>Free:</b> Syntax highlighting, basic completion, and compilation for all GPU platforms</li>
-  <li><b>Individual ($200–400/year):</b> Advanced debugging, profiler integration, AI optimization, memory analysis</li>
-  <li><b>Enterprise ($500–2,000/year per seat):</b> Team collaboration, multi-GPU visualization, priority support, volume licensing</li>
-</ul>
-
 <h3>Requirements</h3>
 <ul>
   <li>IntelliJ IDEA 2024.3+ or CLion 2024.3+</li>
@@ -67,8 +59,7 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
   <li>Community Forum: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/discussions">GitHub Discussions</a></li>
   <li>Enterprise Support: support@jakubjirak.com</li>
   <li>Issues: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/issues">GitHub Issues</a></li>
-</ul>
-    ]]></description>
+</ul>]]></description>
 
     <change-notes><![CDATA[
         <h3>What's New</h3>
@@ -151,6 +142,9 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
         
         <!-- Premium Features -->
         <projectService serviceImplementation="com.gpudev.accelerator.premium.PremiumFeatureGate"/>
+    
+        <notificationGroup id="GPU Dev Accelerator Ultimate Feedback" displayType="BALLOON"/>
+        <projectActivity implementation="com.gpudev.accelerator.feedback.FeedbackNotifier"/>
     </extensions>
 
     <actions>
