@@ -24,10 +24,6 @@ class MultiGPUVisualizer(private val project: Project) {
     )
     
     fun visualizeTopology(): TopologyPanel? {
-        if (!PremiumFeatureGate.getInstance(project).checkFeature(PremiumFeatureGate.Feature.MULTI_GPU_VISUALIZATION)) {
-            return null
-        }
-        
         val topology = detectTopology()
         return TopologyPanel(topology)
     }

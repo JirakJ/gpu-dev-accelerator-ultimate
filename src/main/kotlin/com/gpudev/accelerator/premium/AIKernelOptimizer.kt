@@ -18,10 +18,6 @@ class AIKernelOptimizer(private val project: Project) {
     }
     
     fun analyzeKernel(kernelCode: String): List<OptimizationSuggestion>? {
-        if (!PremiumFeatureGate.getInstance(project).checkFeature(PremiumFeatureGate.Feature.AI_OPTIMIZATION)) {
-            return null
-        }
-        
         return performAIAnalysis(kernelCode)
     }
     

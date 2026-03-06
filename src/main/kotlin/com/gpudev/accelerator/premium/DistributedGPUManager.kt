@@ -61,10 +61,6 @@ class DistributedGPUManager(private val project: Project) {
     )
     
     fun discoverCluster(): List<ClusterNode> {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return emptyList()
-        }
-        
         // Simulate cluster discovery
         val nodes = mutableListOf<ClusterNode>()
         
@@ -133,10 +129,6 @@ class DistributedGPUManager(private val project: Project) {
     }
     
     fun scheduleWorkload(workload: GPUWorkload): WorkloadDistribution? {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return null
-        }
-        
         // Find best node for workload
         val suitableNodes = clusterNodes.values.filter { node ->
             node.status == NodeStatus.AVAILABLE &&
@@ -189,10 +181,6 @@ class DistributedGPUManager(private val project: Project) {
     }
     
     fun getClusterStatistics(): ClusterStatistics {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return ClusterStatistics(0, 0, 0, 0.0, 0.0, emptyList())
-        }
-        
         val totalGPUs = clusterNodes.values.sumOf { it.gpus.size }
         val activeNodes = clusterNodes.values.count { it.status == NodeStatus.AVAILABLE || it.status == NodeStatus.BUSY }
         val queuedWorkloads = workloadQueue.size
@@ -226,10 +214,6 @@ class DistributedGPUManager(private val project: Project) {
     )
     
     fun optimizeDistribution(): List<WorkloadOptimization> {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return emptyList()
-        }
-        
         val optimizations = mutableListOf<WorkloadOptimization>()
         
         // Find underutilized GPUs

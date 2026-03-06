@@ -27,10 +27,6 @@ class AdvancedMemoryAnalyzer(private val project: Project) {
     }
     
     fun analyzeMemory(executable: String): MemoryReport? {
-        if (!PremiumFeatureGate.getInstance(project).checkFeature(PremiumFeatureGate.Feature.MEMORY_ANALYSIS)) {
-            return null
-        }
-        
         return performMemoryAnalysis(executable)
     }
     

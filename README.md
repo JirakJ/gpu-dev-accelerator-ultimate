@@ -2,7 +2,6 @@
 
 **The Ultimate Cross-Platform GPU Development IDE Plugin for IntelliJ IDEA**
 
-[![License](https://img.shields.io/badge/License-Commercial-blue.svg)](https://gpudev.com)
 [![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://plugins.jetbrains.com)
 
 ## 🚀 Overview
@@ -11,47 +10,29 @@ GPU Dev Accelerator Ultimate is the most advanced IntelliJ IDEA plugin for GPU p
 
 ### Why GPU Dev Accelerator Ultimate?
 
-**Market Opportunity:**
-- 4M+ CUDA developers worldwide
-- 500K+ Metal developers
-- 500M+ CUDA-enabled GPUs installed
-- 39,000+ new NVIDIA developer signups per month
-- **Zero modern cross-platform competition**
-
-**Problems We Solve:**
+- No modern cross-platform GPU IDE exists — until now
 - NVIDIA Nsight Eclipse Edition is aging and outdated
 - Visual Studio is Windows-only
-- No modern cross-platform GPU IDE exists
 - Metal development locked to Xcode
 - Fragmented tooling across GPU APIs
 
 ## ✨ Features
 
-### Free Tier
-- ✅ CUDA syntax highlighting
-- ✅ Metal Shading Language support
-- ✅ OpenCL syntax support
-- ✅ Basic code completion
-- ✅ Simple compilation
-- ✅ Community forum access
-
-### Individual License ($200-400/year)
-Everything in Free, plus:
-- 🔧 Advanced CUDA debugging with cuda-gdb integration
-- 📊 GPU profiling (nvprof, Nsight Compute)
-- 🧠 AI-powered kernel optimization suggestions
-- 🔍 Memory leak detection with cuda-memcheck
-- 🎯 Advanced code completion
-- 📈 Performance analysis tools
-
-### Enterprise License ($500-2000/year)
-Everything in Individual, plus:
-- 👥 Team collaboration features
-- 🏢 Priority enterprise support
-- 🔐 Advanced security features
-- 📊 Multi-GPU workload visualization
-- 🎓 Training and onboarding
-- 💼 Volume licensing
+- ✅ CUDA C/C++ syntax highlighting and code completion
+- ✅ Metal Shading Language full support
+- ✅ OpenCL syntax highlighting and kernel compilation
+- ✅ Advanced CUDA debugging with cuda-gdb integration
+- ✅ GPU profiling (nvprof, Nsight Compute)
+- ✅ AI-powered kernel optimization suggestions
+- ✅ Memory leak detection with cuda-memcheck
+- ✅ Multi-GPU workload visualization and topology
+- ✅ Performance analysis tools (flame graphs, occupancy)
+- ✅ Real-time code inspections for GPU programming mistakes
+- ✅ CUDA and Metal run configurations
+- ✅ GPU device information panel
+- ✅ Cross-platform kernel migration (CUDA ↔ Metal ↔ OpenCL ↔ HIP)
+- ✅ Distributed GPU cluster management
+- ✅ Performance regression testing
 
 ## 🎯 Supported Technologies
 
@@ -93,36 +74,6 @@ Or install from disk:
 ./gradlew buildPlugin
 # Install build/distributions/gpu-dev-accelerator-ultimate-1.0.0.zip via Plugins settings
 ```
-
-## 🔑 Licensing
-
-### Free Forever
-Get started with basic GPU development features at no cost.
-
-### Individual License
-Perfect for solo developers and researchers.
-- **Price:** $200-400/year
-- **Target:** Individual developers, students, researchers
-- **Volume:** 150 users → $54K ARR
-
-### Enterprise License
-For teams and organizations requiring advanced features.
-- **Price:** $500-2000/year per seat
-- **Target:** HPC labs, research institutions, trading firms, game studios
-- **Volume:** 15 enterprise customers → $450K ARR
-
-**Path to $500K ARR:** 15 enterprise + 150 individual = $504K
-
-### Activate License
-
-1. Purchase license at https://gpudev.com
-2. Go to `Settings` → `Tools` → `GPU Dev Accelerator`
-3. Enter license key: `GPUDEV-TYPE-XXXXXX-XXXXXX`
-4. Click `Activate License`
-
-Example keys:
-- Individual: `GPUDEV-IND-ABC123-DEF456`
-- Enterprise: `GPUDEV-ENT-GHI789-JKL012`
 
 ## 🎓 Quick Start
 
@@ -182,7 +133,7 @@ gpu-dev-accelerator-ultimate/
 │   ├── profiler/          # Performance profiling
 │   ├── actions/           # IDE actions
 │   ├── inspections/       # Code inspections
-│   ├── license/           # License management
+│   ├── premium/           # Advanced features
 │   └── optimization/      # AI optimization engine
 └── src/main/resources/
     ├── META-INF/plugin.xml
@@ -222,7 +173,7 @@ gpu-dev-accelerator-ultimate/
 | Modern UI | ✅ | ❌ Outdated | ⚠️ | ✅ |
 | AI Optimization | ✅ Unique | ❌ | ❌ | ❌ |
 | Multi-GPU Viz | ✅ | ❌ | ❌ | ❌ |
-| Price | Freemium | Free | Expensive | Free |
+| Price | Free | Free | Expensive | Free |
 
 ## 🎯 Target Market
 
@@ -247,35 +198,6 @@ gpu-dev-accelerator-ultimate/
    - Risk analysis
    - High-frequency trading
 
-### Revenue Model
-
-**Individual Tier ($30/month or $200-400/year):**
-- Students and researchers
-- Indie developers
-- Freelancers
-
-**Enterprise Tier ($500-2000/seat/year):**
-- HPC research labs
-- Game studios
-- Trading firms
-- Large tech companies
-
-## 📈 Growth Strategy
-
-### Year 1 Target: $500K ARR
-- 15 enterprise customers @ $30K each = $450K
-- 150 individual users @ $30/month = $54K
-
-### Year 2 Target: $2M ARR
-- 50 enterprise customers
-- 1,000 individual users
-- Education partnerships
-
-### Year 3 Target: $10M ARR
-- Market leader position
-- 200+ enterprise customers
-- 10,000+ individual users
-
 ## 🤝 Support
 
 - **Documentation:** https://docs.gpudev.com
@@ -285,11 +207,7 @@ gpu-dev-accelerator-ultimate/
 
 ## 📄 License
 
-Commercial license. See [LICENSE](LICENSE) for details.
-
-- Free tier: Unlimited use with basic features
-- Individual: Single-user commercial license
-- Enterprise: Multi-user commercial license with support
+See [LICENSE](LICENSE) for details.
 
 ## 🙏 Acknowledgments
 
