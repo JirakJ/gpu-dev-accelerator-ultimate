@@ -3,8 +3,6 @@
     <name>GPU Dev Accelerator Ultimate</name>
     <vendor email="support@jakubjirak.com" url="https://jakubjirak.com">Jakub Jirak</vendor>
     
-    <product-descriptor code="PGPUDEVACCELERA" release-date="20260215" release-version="20262" />
-
     <description><![CDATA[<h2>GPU Dev Accelerator Ultimate — Cross-Platform CUDA, Metal, and OpenCL Development</h2>
 
 <p>
@@ -137,11 +135,7 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
         <configurationType implementation="com.gpudev.accelerator.run.CudaConfigurationType"/>
         <configurationType implementation="com.gpudev.accelerator.run.MetalConfigurationType"/>
         
-        <!-- License -->
-        <applicationService serviceImplementation="com.gpudev.accelerator.license.LicenseManager"/>
-        
-        <!-- Premium Features -->
-        <projectService serviceImplementation="com.gpudev.accelerator.premium.PremiumFeatureGate"/>
+        <!-- License and Premium service registrations removed -->
     
         <notificationGroup id="GPU Dev Accelerator Ultimate Feedback" displayType="BALLOON"/>
         <projectActivity implementation="com.gpudev.accelerator.feedback.FeedbackNotifier"/>
@@ -162,46 +156,43 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
             
             <separator/>
             
-            <!-- Premium Features -->
-            <group id="GPUDev.PremiumFeatures" text="Premium Features" description="Professional GPU Development Tools" popup="true">
-                <action id="GPUDev.AdvancedDebug" class="com.gpudev.accelerator.actions.AdvancedDebugAction"
-                        text="Advanced CUDA Debug 💎" description="Start advanced debugging with cuda-gdb">
-                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt D"/>
-                </action>
-                
-                <action id="GPUDev.ProfileWithFlameGraph" class="com.gpudev.accelerator.actions.ProfileWithFlameGraphAction"
-                        text="Profile with Flame Graph 💎" description="Real-time profiling with flame graphs">
-                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt P"/>
-                </action>
-                
-                <action id="GPUDev.AIOptimizeKernel" class="com.gpudev.accelerator.actions.AIOptimizeKernelAction"
-                        text="AI Optimize Kernel 💎" description="Get AI-powered optimization suggestions">
-                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt O"/>
-                </action>
-                
-                <action id="GPUDev.VisualizeMultiGPU" class="com.gpudev.accelerator.actions.VisualizeMultiGPUAction"
-                        text="Multi-GPU Topology 💎" description="Visualize GPU topology and workload distribution">
-                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/>
-                </action>
-                
-                <action id="GPUDev.AdvancedMemoryCheck" class="com.gpudev.accelerator.actions.AdvancedMemoryCheckAction"
-                        text="Advanced Memory Analysis 💎" description="Detect memory leaks and race conditions">
-                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt M"/>
-                </action>
-            </group>
+            <action id="GPUDev.AdvancedDebug" class="com.gpudev.accelerator.actions.AdvancedDebugAction"
+                    text="Advanced CUDA Debug" description="Start advanced debugging with cuda-gdb">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt D"/>
+            </action>
+            
+            <action id="GPUDev.ProfileWithFlameGraph" class="com.gpudev.accelerator.actions.ProfileWithFlameGraphAction"
+                    text="Profile with Flame Graph" description="Real-time profiling with flame graphs">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt P"/>
+            </action>
+            
+            <action id="GPUDev.AIOptimizeKernel" class="com.gpudev.accelerator.actions.AIOptimizeKernelAction"
+                    text="AI Optimize Kernel" description="Get AI-powered optimization suggestions">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt O"/>
+            </action>
+            
+            <action id="GPUDev.VisualizeMultiGPU" class="com.gpudev.accelerator.actions.VisualizeMultiGPUAction"
+                    text="Multi-GPU Topology" description="Visualize GPU topology and workload distribution">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/>
+            </action>
+            
+            <action id="GPUDev.AdvancedMemoryCheck" class="com.gpudev.accelerator.actions.AdvancedMemoryCheckAction"
+                    text="Advanced Memory Analysis" description="Detect memory leaks and race conditions">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt M"/>
+            </action>
             
             <separator/>
             
             <action id="GPUDev.MemoryCheck" class="com.gpudev.accelerator.actions.MemoryCheckAction"
-                    text="Basic Memory Check" description="Run basic cuda-memcheck"/>
+                    text="Memory Check" description="Run cuda-memcheck"/>
             
             <action id="GPUDev.OptimizeKernel" class="com.gpudev.accelerator.actions.OptimizeKernelAction"
-                    text="Basic Kernel Optimization" description="Get basic optimization suggestions">
+                    text="Kernel Optimization" description="Get optimization suggestions">
                     <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift O"/>
             </action>
             
             <action id="GPUDev.ProfileKernel" class="com.gpudev.accelerator.actions.ProfileKernelAction"
-                    text="Basic Profiling" description="Profile GPU kernel performance">
+                    text="Profiling" description="Profile GPU kernel performance">
                     <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift P"/>
             </action>
         </group>

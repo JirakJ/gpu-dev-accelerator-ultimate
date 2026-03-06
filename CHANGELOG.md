@@ -15,28 +15,15 @@ All notable changes to GPU Dev Accelerator Ultimate will be documented in this f
 - ✅ Smart code completion for all GPU languages
 - ✅ File type icons and associations
 
-**Free Tier:**
-- ✅ Basic syntax highlighting
-- ✅ Simple code completion
-- ✅ Compilation support
-- ✅ Community forum access
-
-**Individual License:**
+**Debugging & Profiling:**
 - ✅ Advanced CUDA debugging with cuda-gdb integration
 - ✅ GPU profiling (nvprof, Nsight Compute)
 - ✅ Metal debugger support
 - ✅ AI-powered kernel optimization suggestions
 - ✅ Memory leak detection (cuda-memcheck)
 - ✅ Advanced code completion with signatures
-- ✅ Email support
-
-**Enterprise License:**
-- ✅ All Individual features
-- ✅ Team collaboration tools
 - ✅ Multi-GPU workload visualization
-- ✅ Priority support (4hr response)
-- ✅ License management portal
-- ✅ Training and onboarding
+- ✅ Flame graph visualization
 
 **Developer Tools:**
 - ✅ GPU Profiler tool window
@@ -56,7 +43,6 @@ All notable changes to GPU Dev Accelerator Ultimate will be documented in this f
 - ✅ Metal Application run configuration
 
 **Settings:**
-- ✅ License activation interface
 - ✅ Compiler path configuration
 - ✅ Profiler settings
 

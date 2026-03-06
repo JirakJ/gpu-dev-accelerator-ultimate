@@ -22,10 +22,6 @@ class AdvancedDebugger(private val project: Project) {
     )
     
     fun startAdvancedDebugSession(cudaExecutable: String): DebugSession? {
-        if (!PremiumFeatureGate.getInstance(project).checkFeature(PremiumFeatureGate.Feature.ADVANCED_DEBUGGING)) {
-            return null
-        }
-        
         return DebugSession(project, cudaExecutable)
     }
     

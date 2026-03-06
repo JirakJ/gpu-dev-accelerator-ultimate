@@ -27,10 +27,6 @@ class RealTimeProfiler(private val project: Project) {
     )
     
     fun startProfiling(kernelPath: String): ProfileSession? {
-        if (!PremiumFeatureGate.getInstance(project).checkFeature(PremiumFeatureGate.Feature.REAL_TIME_PROFILING)) {
-            return null
-        }
-        
         return ProfileSession(project, kernelPath)
     }
     

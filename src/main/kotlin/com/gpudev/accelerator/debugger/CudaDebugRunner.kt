@@ -6,15 +6,13 @@ import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.execution.runners.GenericProgramRunner
 import com.intellij.execution.ui.RunContentDescriptor
 import com.intellij.openapi.fileEditor.FileDocumentManager
-import com.gpudev.accelerator.license.LicenseManager
 
 class CudaDebugRunner : GenericProgramRunner<com.intellij.execution.configurations.RunnerSettings>() {
     
     override fun getRunnerId(): String = "CudaDebugRunner"
     
     override fun canRun(executorId: String, profile: RunProfile): Boolean {
-        val licenseManager = LicenseManager.getInstance()
-        return licenseManager.isFeatureEnabled(LicenseManager.Feature.CUDA_DEBUGGING)
+        return true
     }
     
     override fun doExecute(state: RunProfileState, environment: ExecutionEnvironment): RunContentDescriptor? {

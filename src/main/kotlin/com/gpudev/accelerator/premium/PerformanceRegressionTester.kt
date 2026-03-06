@@ -47,13 +47,6 @@ class PerformanceRegressionTester(private val project: Project) {
         inputSize: Int,
         iterations: Int = 100
     ): BenchmarkResult {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return BenchmarkResult(
-                kernelName, Instant.now(), null, 0.0, 0.0, 0, 0,
-                Triple(0, 0, 0), Triple(0, 0, 0), emptyMap()
-            )
-        }
-        
         // Simulate kernel execution and benchmarking
         val warmupRuns = 10
         val timings = mutableListOf<Double>()
@@ -134,13 +127,6 @@ class PerformanceRegressionTester(private val project: Project) {
     }
     
     fun detectRegression(kernelName: String, threshold: Double = 5.0): RegressionAnalysis {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return RegressionAnalysis(
-                false, null, Severity.NONE, 0.0, 0.0, 0.0,
-                "Premium feature required", emptyList()
-            )
-        }
-        
         val history = benchmarkHistory[kernelName]
         if (history == null || history.size < 2) {
             return RegressionAnalysis(
@@ -285,10 +271,6 @@ class PerformanceRegressionTester(private val project: Project) {
     }
     
     fun compareBenchmarks(kernelName: String, commitA: String, commitB: String): ComparisonReport {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return ComparisonReport(null, null, emptyList())
-        }
-        
         val history = benchmarkHistory[kernelName] ?: return ComparisonReport(null, null, emptyList())
         
         val resultA = history.find { it.commitHash == commitA }

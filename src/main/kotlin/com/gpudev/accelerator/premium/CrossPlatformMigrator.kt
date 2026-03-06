@@ -23,16 +23,6 @@ class CrossPlatformMigrator(private val project: Project) {
         sourcePlatform: GPUPlatform,
         targetPlatform: GPUPlatform
     ): MigrationResult {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return MigrationResult(
-                false,
-                "// Premium feature required",
-                listOf("Upgrade to Premium for Cross-Platform Migration"),
-                emptyList(),
-                emptyMap()
-            )
-        }
-        
         val sourceCode = sourceFile.text
         val migrations = when (sourcePlatform to targetPlatform) {
             GPUPlatform.CUDA to GPUPlatform.METAL -> cudaToMetal(sourceCode)
@@ -277,10 +267,6 @@ class CrossPlatformMigrator(private val project: Project) {
     }
     
     fun analyzePortability(file: PsiFile): PortabilityReport {
-        if (!PremiumFeatureGate.isPremiumEnabled(project)) {
-            return PortabilityReport(emptyList(), emptyList(), 0.0)
-        }
-        
         val code = file.text
         val issues = mutableListOf<PortabilityIssue>()
         val recommendations = mutableListOf<String>()
