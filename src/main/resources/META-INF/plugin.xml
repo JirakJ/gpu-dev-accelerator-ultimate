@@ -105,7 +105,7 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
         <xdebugger.breakpointType implementation="com.gpudev.accelerator.debugger.CudaLineBreakpointType"/>
         
         <!-- Profiler -->
-        <toolWindow id="GPU Profiler" anchor="bottom" icon="/icons/profiler.svg"
+        <toolWindow id="GPU Profiler" anchor="bottom" icon="AllIcons.Debugger.Db_primitive"
                     factoryClass="com.gpudev.accelerator.profiler.ProfilerToolWindowFactory"/>
         
         <!-- Settings -->
