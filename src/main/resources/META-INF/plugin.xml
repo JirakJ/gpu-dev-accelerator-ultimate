@@ -99,6 +99,7 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
         <!-- Code Completion -->
         <completion.contributor language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaCompletionContributor"/>
         <completion.contributor language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalCompletionContributor"/>
+        <completion.contributor language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLCompletionContributor"/>
         
         <!-- Debugger -->
         <programRunner implementation="com.gpudev.accelerator.debugger.CudaDebugRunner"/>

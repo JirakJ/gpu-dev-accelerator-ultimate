@@ -15,36 +15,14 @@ class OpenCLParserDefinition : ParserDefinition {
     override fun createLexer(project: Project?): Lexer = OpenCLLexer()
     override fun createParser(project: Project?): PsiParser = OpenCLParser()
     override fun getFileNodeType(): IFileElementType = FILE
-    override fun getCommentTokens(): TokenSet = TokenSet.EMPTY
-    override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
+    override fun getCommentTokens(): TokenSet = OpenCLTokenTypes.COMMENTS
+    override fun getStringLiteralElements(): TokenSet = OpenCLTokenTypes.STRINGS
     override fun createElement(node: ASTNode?): PsiElement = OpenCLPsiElement(node!!)
     override fun createFile(viewProvider: FileViewProvider): PsiFile = OpenCLFile(viewProvider)
     
     companion object {
         val FILE = IFileElementType(OpenCLLanguage)
     }
-}
-
-class OpenCLLexer : com.intellij.lexer.LexerBase() {
-    private var myBuffer: CharSequence = ""
-    private var myStartOffset = 0
-    private var myEndOffset = 0
-    private var myPosition = 0
-    
-    override fun start(buffer: CharSequence, startOffset: Int, endOffset: Int, initialState: Int) {
-        myBuffer = buffer
-        myStartOffset = startOffset
-        myEndOffset = endOffset
-        myPosition = startOffset
-    }
-    
-    override fun getState(): Int = 0
-    override fun getTokenType() = null
-    override fun getTokenStart(): Int = myPosition
-    override fun getTokenEnd(): Int = myEndOffset
-    override fun advance() { myPosition = myEndOffset }
-    override fun getBufferSequence(): CharSequence = myBuffer
-    override fun getBufferEnd(): Int = myEndOffset
 }
 
 class OpenCLParser : PsiParser {
