@@ -2,6 +2,25 @@
 
 All notable changes to GPU Dev Accelerator Ultimate will be documented in this file.
 
+## [2026.3.6] - 2026-03-13
+
+### 🐛 Critical Bug Fix
+
+- **Fixed: OpenCL files crash editor on open** — The OpenCL, CUDA, and Metal lexers had a critical bug where `getTokenType()` always returned `null`, causing `LexerEditorHighlighter` to throw `IllegalStateException: Unexpected termination offset`. This made `.cl`, `.cu`, `.cuh`, and `.metal` files completely unopenable.
+
+### ✨ Improvements
+
+- **Complete lexer rewrite** — All three GPU language lexers (CUDA, Metal, OpenCL) now properly tokenize source code with full support for:
+  - Keywords, types, qualifiers, and built-in functions with semantic highlighting
+  - Line comments (`//`) and block comments (`/* */`) with state restoration
+  - Preprocessor directives with line continuation support
+  - String and character literals with escape sequences
+  - Numeric literals (decimal, hex, binary, float, scientific notation)
+  - Multi-character operators (`<<`, `>>`, `<<<`, `>>>`, `==`, `!=`, etc.)
+- **Proper syntax highlighting** — Token types now map to distinct editor colors (keywords, types, built-ins, comments, strings, numbers, preprocessor, operators)
+- **OpenCL code completion** — Added code completion for OpenCL qualifiers, work-item functions, vector types, math functions, atomic operations, and image functions
+- **Shared lexer infrastructure** — Introduced `CLikeLexer` base class for maintainable, consistent tokenization across all three GPU languages
+
 ## [1.0.0] - 2024-11-16
 
 ### 🎉 Initial Release

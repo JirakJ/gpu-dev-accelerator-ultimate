@@ -15,36 +15,14 @@ class MetalParserDefinition : ParserDefinition {
     override fun createLexer(project: Project?): Lexer = MetalLexer()
     override fun createParser(project: Project?): PsiParser = MetalParser()
     override fun getFileNodeType(): IFileElementType = FILE
-    override fun getCommentTokens(): TokenSet = TokenSet.EMPTY
-    override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
+    override fun getCommentTokens(): TokenSet = MetalTokenTypes.COMMENTS
+    override fun getStringLiteralElements(): TokenSet = MetalTokenTypes.STRINGS
     override fun createElement(node: ASTNode?): PsiElement = MetalPsiElement(node!!)
     override fun createFile(viewProvider: FileViewProvider): PsiFile = MetalFile(viewProvider)
     
     companion object {
         val FILE = IFileElementType(MetalLanguage)
     }
-}
-
-class MetalLexer : com.intellij.lexer.LexerBase() {
-    private var myBuffer: CharSequence = ""
-    private var myStartOffset = 0
-    private var myEndOffset = 0
-    private var myPosition = 0
-    
-    override fun start(buffer: CharSequence, startOffset: Int, endOffset: Int, initialState: Int) {
-        myBuffer = buffer
-        myStartOffset = startOffset
-        myEndOffset = endOffset
-        myPosition = startOffset
-    }
-    
-    override fun getState(): Int = 0
-    override fun getTokenType() = null
-    override fun getTokenStart(): Int = myPosition
-    override fun getTokenEnd(): Int = myEndOffset
-    override fun advance() { myPosition = myEndOffset }
-    override fun getBufferSequence(): CharSequence = myBuffer
-    override fun getBufferEnd(): Int = myEndOffset
 }
 
 class MetalParser : PsiParser {
