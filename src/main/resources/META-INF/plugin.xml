@@ -60,6 +60,11 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
 </ul>]]></description>
 
     <change-notes><![CDATA[
+        <h3>2026.3.7 — Freemium Model</h3>
+        <ul>
+            <li><b>Freemium licensing</b> — Added product-descriptor for JetBrains Marketplace freemium model (code: PGPUDEVACCELERA)</li>
+        </ul>
+
         <h3>What's New</h3>
         <ul>
             <li><b>CUDA Development</b> - Full CUDA C/C++ syntax highlighting, code completion, and kernel launch assistance</li>
@@ -76,6 +81,8 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+
+    <product-descriptor code="PGPUDEVACCELERA" release-date="20260327" release-version="20263" optional="false"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- File Types -->
