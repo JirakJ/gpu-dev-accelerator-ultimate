@@ -2,6 +2,11 @@
 
 All notable changes to GPU Dev Accelerator Ultimate will be documented in this file.
 
+## [2026.3.7] - 2026-03-27
+
+### Added
+- **Freemium licensing** — Added `product-descriptor` for JetBrains Marketplace freemium model (code: `PGPUDEVACCELERA`)
+
 ## [2026.3.6] - 2026-03-13
 
 ### 🐛 Critical Bug Fix
