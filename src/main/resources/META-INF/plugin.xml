@@ -60,6 +60,13 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
 </ul>]]></description>
 
     <change-notes><![CDATA[
+        <h3>2026.4.1 — Critical Debug Runner Fix</h3>
+        <ul>
+            <li><b>Fixed: AbstractMethodError crash</b> — Replaced deprecated GenericProgramRunner.doExecute() with ProgramRunner.execute() API compatible with IntelliJ 2024.3+</li>
+            <li><b>Fixed: Debug session hijacking</b> — CudaDebugRunner.canRun() now only activates for CUDA/Metal run configurations instead of intercepting all debug sessions</li>
+            <li><b>Fixed: RustRover/other IDE compatibility</b> — Plugin no longer breaks debugging in non-GPU languages</li>
+        </ul>
+
         <h3>2026.3.7 — Freemium Model</h3>
         <ul>
             <li><b>Freemium licensing</b> — Added product-descriptor for JetBrains Marketplace freemium model (code: PGPUDEVACCELERA)</li>
@@ -82,7 +89,7 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
-    <product-descriptor code="PGPUDEVACCELERA" release-date="20260327" release-version="20263" optional="false"/>
+    <product-descriptor code="PGPUDEVACCELERA" release-date="20260409" release-version="20264" optional="false"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- File Types -->
