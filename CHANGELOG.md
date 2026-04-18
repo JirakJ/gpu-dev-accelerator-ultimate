@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026.4.2] - 2026-04-18
+
+### Changed
+- Enabled freemium licensing via `<product-descriptor optional="true">`. Plugin remains fully functional without a license; premium features may be introduced in future minor releases.
+
+
 All notable changes to GPU Dev Accelerator Ultimate will be documented in this file.
 
 ## [2026.3.7] - 2026-03-27
