@@ -1,228 +1,70 @@
 # GPU Dev Accelerator Ultimate
 
-**The Ultimate Cross-Platform GPU Development IDE Plugin for IntelliJ IDEA**
+**CUDA, Metal, and OpenCL development for IntelliJ-based IDEs**
 
-[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://plugins.jetbrains.com)
+[![Version](https://img.shields.io/badge/Version-2026.5.0-green.svg)](https://plugins.jetbrains.com)
 
-## 🚀 Overview
+Write, compile, inspect, and analyze GPU code in one IDE. Every feature is backed by a
+real tool integration (nvcc, compute-sanitizer, Nsight Compute, nvidia-smi) or by
+deterministic static analysis — no mock data.
 
-GPU Dev Accelerator Ultimate is the most advanced IntelliJ IDEA plugin for GPU programming, supporting CUDA, Metal, OpenCL, and Vulkan development in a unified, modern IDE environment.
+## Features
 
-### Why GPU Dev Accelerator Ultimate?
+### Language support (.cu, .cuh, .metal, .cl)
+- Syntax highlighting for CUDA C/C++, Metal Shading Language, OpenCL C
+- Code completion with API signatures for 100+ builtins (runtime API, atomics, warp/simd primitives, barriers)
+- Quick documentation (Ctrl+Q) for kernel qualifiers and builtins
+- Line/block commenting (Ctrl+/), brace matching
+- Live templates: `cukernel`, `cugridstride`, `cucheck`, `culaunch`, `cushared`, `cutime`, `mtlkernel`, `clkernel`
 
-- No modern cross-platform GPU IDE exists — until now
-- NVIDIA Nsight Eclipse Edition is aging and outdated
-- Visual Studio is Windows-only
-- Metal development locked to Xcode
-- Fragmented tooling across GPU APIs
+### Toolchain integration (GPU Dev console, background tasks)
+- **Compile CUDA File** (Ctrl+Alt+C) — nvcc with configured `-arch`/flags, clickable errors
+- **Show PTX** — inspect the code nvcc actually generates for the current file
+- **Memory Check** (Ctrl+Alt+M) — compute-sanitizer (or cuda-memcheck) on an executable
+- **Profile Executable** (Ctrl+Shift+P) — Nsight Compute (`ncu`) or nvprof report
+- **GPU Information** — nvidia-smi device query + Apple GPUs via system_profiler
+- **Multi-GPU Topology** (Ctrl+Alt+G) — real link matrix from `nvidia-smi topo -m` with live utilization
 
-## ✨ Features
+### Static analysis
+- Inspections: GPU memory leaks (cudaMalloc/cudaFree pairing), unchecked CUDA API calls
+  (with a **Wrap in CUDA_CHECK** quick fix), kernel performance heuristics
+- **Analyze Kernel** (Ctrl+Alt+O) — strided access, warp divergence, `__syncthreads()` in
+  divergent branches, missing bounds checks, missing `__restrict__`, device-side malloc, and more
+- **Occupancy Calculator** — theoretical SM occupancy for CC 7.0–9.0 with limiting-factor breakdown
+- **Migrate Kernel** — CUDA ⇄ Metal / OpenCL / HIP source-port starting points
 
-- ✅ CUDA C/C++ syntax highlighting and code completion
-- ✅ Metal Shading Language full support
-- ✅ OpenCL syntax highlighting and kernel compilation
-- ✅ Advanced CUDA debugging with cuda-gdb integration
-- ✅ GPU profiling (nvprof, Nsight Compute)
-- ✅ AI-powered kernel optimization suggestions
-- ✅ Memory leak detection with cuda-memcheck
-- ✅ Multi-GPU workload visualization and topology
-- ✅ Performance analysis tools (flame graphs, occupancy)
-- ✅ Real-time code inspections for GPU programming mistakes
-- ✅ CUDA and Metal run configurations
-- ✅ GPU device information panel
-- ✅ Cross-platform kernel migration (CUDA ↔ Metal ↔ OpenCL ↔ HIP)
-- ✅ Distributed GPU cluster management
-- ✅ Performance regression testing
+## Requirements
 
-## 🎯 Supported Technologies
+- IntelliJ IDEA / CLion 2024.3+ (any IntelliJ-based IDE)
+- NVIDIA CUDA Toolkit for compile/profile/sanitize features (`nvcc`, `compute-sanitizer`, `ncu` on PATH,
+  or set paths in **Settings | Tools | GPU Dev Accelerator**)
+- macOS for Apple GPU detection
 
-### CUDA
-- Full CUDA C/C++ syntax support
-- cuda-gdb debugger integration
-- nvprof and Nsight Compute profiling
-- CUDA Runtime API completion
-- Kernel launch configuration assistance
+## Quick start
 
-### Metal
-- Complete Metal Shading Language support
-- Metal Performance Shaders integration
-- Shader debugging outside Xcode
-- Compute and graphics pipeline support
-- iOS/macOS cross-platform development
+1. Open a `.cu` file — highlighting, completion, and inspections are active immediately.
+2. Type `cukernel` + Tab for a kernel skeleton with a bounds check.
+3. `Ctrl+Alt+C` to compile; errors are clickable in the **GPU Dev** tool window.
+4. **GPU Dev | Occupancy Calculator** to size your blocks before profiling.
 
-### OpenCL
-- OpenCL C syntax highlighting
-- Kernel compilation
-- Platform and device detection
-- Cross-vendor support (NVIDIA, AMD, Intel)
+## Development
 
-### Coming Soon
-- Vulkan compute shaders
-- SYCL support
-- ROCm/HIP for AMD GPUs
-
-## 📦 Installation
-
-1. Open IntelliJ IDEA
-2. Go to `Settings/Preferences` → `Plugins`
-3. Search for "GPU Dev Accelerator Ultimate"
-4. Click `Install`
-5. Restart IDE
-
-Or install from disk:
 ```bash
-./gradlew buildPlugin
-# Install build/distributions/gpu-dev-accelerator-ultimate-1.0.0.zip via Plugins settings
+./gradlew test          # 136 unit tests
+./gradlew runIde        # sandbox IDE
+./gradlew buildPlugin   # build/distributions/*.zip
 ```
 
-## 🎓 Quick Start
+## Support
 
-### CUDA Development
+- Issues: https://github.com/JirakJ/gpu-dev-accelerator-ultimate/issues
+- Discussions: https://github.com/JirakJ/gpu-dev-accelerator-ultimate/discussions
+- Enterprise: support@jakubjirak.com
 
-1. Create a new `.cu` file:
-```cuda
-#include <cuda_runtime.h>
-#include <stdio.h>
-
-__global__ void vectorAdd(float *a, float *b, float *c, int n) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < n) {
-        c[idx] = a[idx] + b[idx];
-    }
-}
-
-int main() {
-    // Kernel launch
-    vectorAdd<<<256, 256>>>(d_a, d_b, d_c, n);
-    cudaDeviceSynchronize();
-}
-```
-
-2. Compile: `Ctrl+Alt+C`
-3. Debug: Set breakpoints and run with cuda-gdb
-4. Profile: `Ctrl+Alt+P` for performance analysis
-5. Optimize: `Ctrl+Alt+O` for AI suggestions
-
-### Metal Development
-
-1. Create a new `.metal` file:
-```metal
-#include <metal_stdlib>
-using namespace metal;
-
-kernel void vectorAdd(device float *a [[buffer(0)]],
-                      device float *b [[buffer(1)]],
-                      device float *c [[buffer(2)]],
-                      uint id [[thread_position_in_grid]]) {
-    c[id] = a[id] + b[id];
-}
-```
-
-2. Compile with `metal` compiler
-3. Use Metal debugger for shader analysis
-
-## 🏗️ Architecture
-
-```
-gpu-dev-accelerator-ultimate/
-├── src/main/kotlin/com/gpudev/accelerator/
-│   ├── cuda/              # CUDA language support
-│   ├── metal/             # Metal language support
-│   ├── opencl/            # OpenCL support
-│   ├── debugger/          # Debugging infrastructure
-│   ├── profiler/          # Performance profiling
-│   ├── actions/           # IDE actions
-│   ├── inspections/       # Code inspections
-│   ├── premium/           # Advanced features
-│   └── optimization/      # AI optimization engine
-└── src/main/resources/
-    ├── META-INF/plugin.xml
-    └── icons/
-```
-
-## 🔧 Development
-
-### Build
-```bash
-./gradlew clean build
-```
-
-### Run in IDE
-```bash
-./gradlew runIde
-```
-
-### Test
-```bash
-./gradlew test
-```
-
-### Package
-```bash
-./gradlew buildPlugin
-```
-
-## 📊 Competitive Advantage
-
-| Feature | GPU Dev Accelerator | Nsight Eclipse | Visual Studio | Xcode |
-|---------|---------------------|----------------|---------------|-------|
-| Cross-platform | ✅ | ❌ | ❌ Windows only | ❌ macOS only |
-| CUDA Support | ✅ Advanced | ✅ Basic | ✅ Good | ❌ |
-| Metal Support | ✅ Advanced | ❌ | ❌ | ✅ Good |
-| OpenCL Support | ✅ | ✅ | ✅ | ✅ |
-| Modern UI | ✅ | ❌ Outdated | ⚠️ | ✅ |
-| AI Optimization | ✅ Unique | ❌ | ❌ | ❌ |
-| Multi-GPU Viz | ✅ | ❌ | ❌ | ❌ |
-| Price | Free | Free | Expensive | Free |
-
-## 🎯 Target Market
-
-### Primary Markets
-1. **AI/ML Developers** (4M+ CUDA users)
-   - Deep learning researchers
-   - Computer vision engineers
-   - LLM developers
-
-2. **HPC & Scientific Computing** (500K+ users)
-   - National labs and universities
-   - Weather simulation
-   - Molecular dynamics
-
-3. **Gaming & Graphics** (500K+ Metal users)
-   - Game engine developers
-   - Graphics programmers
-   - Real-time rendering
-
-4. **Finance & Trading** (100K+ users)
-   - Algorithmic trading
-   - Risk analysis
-   - High-frequency trading
-
-## 🤝 Support
-
-- **Documentation:** https://docs.gpudev.com
-- **Community Forum:** https://forum.gpudev.com
-- **Enterprise Support:** enterprise@gpudev.com
-- **Issues:** https://github.com/gpudev/issues
-
-## 📄 License
+## License
 
 See [LICENSE](LICENSE) for details.
 
-## 🙏 Acknowledgments
-
-Built with:
-- IntelliJ Platform SDK
-- NVIDIA CUDA Toolkit
-- Apple Metal
-- Khronos OpenCL
-
 ---
 
-**© 2024 GPU Dev Tools. All rights reserved.**
-
-*Transform your GPU development workflow today!*
-
-🌐 **Website:** https://gpudev.com  
-📧 **Contact:** info@gpudev.com  
-🐦 **Twitter:** @GPUDevTools
+**© 2026 Jakub Jirák. All rights reserved.**
