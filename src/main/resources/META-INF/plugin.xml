@@ -2,53 +2,47 @@
     <id>com.jakubjirak.gpudev.ultimate</id>
     <name>GPU Dev Accelerator Ultimate</name>
     <vendor email="support@jakubjirak.com" url="https://jakubjirak.com">Jakub Jirak</vendor>
-    
-    <description><![CDATA[<h2>GPU Dev Accelerator Ultimate — Cross-Platform CUDA, Metal, and OpenCL Development</h2>
+
+    <description><![CDATA[<h2>GPU Dev Accelerator Ultimate — CUDA, Metal, and OpenCL Development</h2>
 
 <p>
-The most advanced JetBrains plugin for GPU programming. Write, debug, profile, and optimize CUDA, Metal, and OpenCL code in a unified, modern IDE environment — no more switching between fragmented tools.
+Write, compile, inspect, and analyze CUDA, Metal, and OpenCL code in a unified IDE environment.
+Every feature is backed by a real tool integration or deterministic analysis — no mock data.
 </p>
 
 <h3>GPU Language Support</h3>
 <ul>
-  <li>Full CUDA C/C++ syntax highlighting with kernel launch assistance</li>
-  <li>Complete Metal Shading Language support for iOS and macOS</li>
-  <li>OpenCL C syntax highlighting and kernel compilation</li>
-  <li>Context-aware code completion for all GPU APIs</li>
-  <li>Dedicated file types: .cu, .cuh, .metal, .cl</li>
+  <li>Syntax highlighting for CUDA C/C++, Metal Shading Language, and OpenCL C (.cu, .cuh, .metal, .cl)</li>
+  <li>Code completion with API signatures for 100+ GPU builtins across all three languages</li>
+  <li>Quick documentation (Ctrl+Q) for kernel qualifiers, builtins, atomics, and warp primitives</li>
+  <li>Line/block commenting (Ctrl+/) and brace matching</li>
+  <li>Live templates: kernel skeletons, grid-stride loops, CUDA_CHECK macro, event timing, shared-memory tiles</li>
 </ul>
 
-<h3>Debugging and Profiling</h3>
+<h3>Toolchain Integration</h3>
 <ul>
-  <li>Integrated cuda-gdb debugger with breakpoints inside GPU kernels</li>
-  <li>Thread-level inspection and memory error detection</li>
-  <li>nvprof and Nsight Compute profiling integration</li>
-  <li>Flame graph visualization for performance hotspots</li>
-  <li>Metal Performance Shaders framework integration</li>
+  <li>Compile CUDA files with nvcc in the background — errors clickable in the GPU Dev console</li>
+  <li>Show PTX for the current file to inspect generated code</li>
+  <li>Memory checking via compute-sanitizer (or cuda-memcheck)</li>
+  <li>Kernel profiling via Nsight Compute (ncu) or nvprof</li>
+  <li>GPU inventory from nvidia-smi and system_profiler (Apple GPUs)</li>
+  <li>Live multi-GPU topology from nvidia-smi topo (NVLink/PIX/PHB/SYS links, utilization, memory)</li>
+  <li>Configurable toolchain paths, -arch, and extra nvcc flags in Settings | Tools | GPU Dev Accelerator</li>
 </ul>
 
-<h3>Optimization and Analysis</h3>
+<h3>Static Analysis</h3>
 <ul>
-  <li>AI-powered kernel optimization suggestions</li>
-  <li>GPU memory leak detection with cuda-memcheck</li>
-  <li>Occupancy analysis and warp divergence detection</li>
-  <li>Multi-GPU topology visualization and workload distribution</li>
-  <li>Real-time code inspections for GPU programming mistakes</li>
-</ul>
-
-<h3>Productivity Features</h3>
-<ul>
-  <li>CUDA and Metal run configurations</li>
-  <li>GPU device information panel</li>
-  <li>Keyboard shortcuts for compile (Ctrl+Alt+C), profile (Ctrl+Alt+P), and optimize (Ctrl+Alt+O)</li>
+  <li>Inspections: GPU memory leaks (cudaMalloc without cudaFree), unchecked CUDA API calls with a CUDA_CHECK quick fix, kernel performance heuristics</li>
+  <li>Kernel heuristics: strided access, warp divergence, __syncthreads() in divergent branches, missing bounds checks, missing __restrict__, device-side malloc, and more</li>
+  <li>Theoretical occupancy calculator for Volta through Hopper</li>
+  <li>Cross-platform kernel migration starting points (CUDA ⇄ Metal / OpenCL / HIP)</li>
 </ul>
 
 <h3>Requirements</h3>
 <ul>
-  <li>IntelliJ IDEA 2024.3+ or CLion 2024.3+</li>
-  <li>NVIDIA CUDA Toolkit (for CUDA features)</li>
-  <li>macOS (for Metal features)</li>
-  <li>Java 17+</li>
+  <li>IntelliJ IDEA 2024.3+ or CLion 2024.3+ (any IntelliJ-based IDE)</li>
+  <li>NVIDIA CUDA Toolkit for compile/profile/sanitize features</li>
+  <li>macOS for Apple GPU detection</li>
 </ul>
 
 <h3>Support</h3>
@@ -60,75 +54,87 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
 </ul>]]></description>
 
     <change-notes><![CDATA[
+        <h3>2026.5.0 — Production Overhaul</h3>
+        <ul>
+            <li><b>Real toolchain integration</b> — nvcc compilation now runs in the background with clickable errors in the new GPU Dev console; no more UI freezes or modal dialogs</li>
+            <li><b>New: Show PTX</b> — compile the current .cu file to PTX and inspect the generated code in the editor</li>
+            <li><b>New: Occupancy calculator</b> — theoretical SM occupancy for Volta through Hopper with limiting-factor breakdown</li>
+            <li><b>New: Migrate Kernel action</b> — CUDA ⇄ Metal/OpenCL/HIP source porting starting points</li>
+            <li><b>New: editor basics</b> — Ctrl+/ commenting, brace matching, 8 live templates, quick documentation for 100+ GPU builtins</li>
+            <li><b>Real inspections</b> — memory-leak and unchecked-API-call inspections now report problems in the editor; quick fix wraps calls in CUDA_CHECK</li>
+            <li><b>Real GPU data</b> — GPU info, memory check (compute-sanitizer), profiling (Nsight Compute), and multi-GPU topology now read from the actual tools; simulated/placeholder outputs removed</li>
+            <li><b>New settings page</b> — toolchain paths, GPU architecture, extra nvcc flags, timeouts</li>
+        </ul>
+
         <h3>2026.4.1 — Critical Debug Runner Fix</h3>
         <ul>
             <li><b>Fixed: AbstractMethodError crash</b> — Replaced deprecated GenericProgramRunner.doExecute() with ProgramRunner.execute() API compatible with IntelliJ 2024.3+</li>
-            <li><b>Fixed: Debug session hijacking</b> — CudaDebugRunner.canRun() now only activates for CUDA/Metal run configurations instead of intercepting all debug sessions</li>
-            <li><b>Fixed: RustRover/other IDE compatibility</b> — Plugin no longer breaks debugging in non-GPU languages</li>
-        </ul>
-
-        <h3>2026.3.7 — Freemium Model</h3>
-        <ul>
-            <li><b>Freemium licensing</b> — Added product-descriptor for JetBrains Marketplace freemium model (code: PGPUDEVACCELERA)</li>
-        </ul>
-
-        <h3>What's New</h3>
-        <ul>
-            <li><b>CUDA Development</b> - Full CUDA C/C++ syntax highlighting, code completion, and kernel launch assistance</li>
-            <li><b>Metal Shading Language</b> - Complete Metal support for iOS and macOS GPU development</li>
-            <li><b>OpenCL Support</b> - Syntax highlighting and kernel compilation for cross-vendor GPU code</li>
-            <li><b>GPU Debugging</b> - Integrated cuda-gdb debugger with thread-level inspection and breakpoints</li>
-            <li><b>Performance Profiling</b> - nvprof and Nsight Compute integration with flame graph visualization</li>
-            <li><b>AI Kernel Optimization</b> - Intelligent suggestions for occupancy, memory coalescing, and warp divergence</li>
-            <li><b>Memory Analysis</b> - GPU memory leak detection and allocation tracking with cuda-memcheck</li>
-            <li><b>Multi-GPU Topology</b> - Visualize GPU devices and distribute workloads across multiple GPUs</li>
-            <li><b>Code Inspections</b> - Real-time warnings for memory leaks and kernel optimization opportunities</li>
+            <li><b>Fixed: Debug session hijacking</b> — CudaDebugRunner.canRun() now only activates for CUDA/Metal run configurations</li>
         </ul>
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
-    <product-descriptor code="PGPUDEVACCELERA" release-date="20260418" release-version="20264" optional="true"/>
+    <product-descriptor code="PGPUDEVACCELERA" release-date="20260730" release-version="20265" optional="true"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- File Types -->
-        <fileType name="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaFileType" 
+        <fileType name="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaFileType"
                   fieldName="INSTANCE" language="CUDA" extensions="cu;cuh"/>
-        <fileType name="Metal" implementationClass="com.gpudev.accelerator.metal.MetalFileType" 
+        <fileType name="Metal" implementationClass="com.gpudev.accelerator.metal.MetalFileType"
                   fieldName="INSTANCE" language="Metal" extensions="metal"/>
-        <fileType name="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLFileType" 
+        <fileType name="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLFileType"
                   fieldName="INSTANCE" language="OpenCL" extensions="cl"/>
-        
+
         <!-- Languages -->
         <lang.parserDefinition language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaParserDefinition"/>
         <lang.parserDefinition language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalParserDefinition"/>
         <lang.parserDefinition language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLParserDefinition"/>
-        
+
         <!-- Syntax Highlighting -->
         <lang.syntaxHighlighterFactory language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLSyntaxHighlighterFactory"/>
-        
+
         <!-- Code Completion -->
         <completion.contributor language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaCompletionContributor"/>
         <completion.contributor language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalCompletionContributor"/>
         <completion.contributor language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLCompletionContributor"/>
-        
+
+        <!-- Quick Documentation -->
+        <lang.documentationProvider language="CUDA" implementationClass="com.gpudev.accelerator.common.GpuDocumentationProvider"/>
+        <lang.documentationProvider language="Metal" implementationClass="com.gpudev.accelerator.common.GpuDocumentationProvider"/>
+        <lang.documentationProvider language="OpenCL" implementationClass="com.gpudev.accelerator.common.GpuDocumentationProvider"/>
+
+        <!-- Commenting (Ctrl+/) -->
+        <lang.commenter language="CUDA" implementationClass="com.gpudev.accelerator.common.GpuCommenter"/>
+        <lang.commenter language="Metal" implementationClass="com.gpudev.accelerator.common.GpuCommenter"/>
+        <lang.commenter language="OpenCL" implementationClass="com.gpudev.accelerator.common.GpuCommenter"/>
+
+        <!-- Brace Matching -->
+        <lang.braceMatcher language="CUDA" implementationClass="com.gpudev.accelerator.common.CudaBraceMatcher"/>
+        <lang.braceMatcher language="Metal" implementationClass="com.gpudev.accelerator.common.MetalBraceMatcher"/>
+        <lang.braceMatcher language="OpenCL" implementationClass="com.gpudev.accelerator.common.OpenCLBraceMatcher"/>
+
+        <!-- Live Templates -->
+        <liveTemplateContext contextId="GPUDEV" implementation="com.gpudev.accelerator.templates.GpuTemplateContext"/>
+        <defaultLiveTemplates file="/liveTemplates/GPUDev.xml"/>
+
         <!-- Debugger -->
         <programRunner implementation="com.gpudev.accelerator.debugger.CudaDebugRunner"/>
         <xdebugger.breakpointType implementation="com.gpudev.accelerator.debugger.CudaLineBreakpointType"/>
-        
-        <!-- Profiler -->
-        <toolWindow id="GPU Profiler" anchor="bottom" icon="AllIcons.Debugger.Db_primitive"
-                    factoryClass="com.gpudev.accelerator.profiler.ProfilerToolWindowFactory"/>
-        
+
+        <!-- GPU Dev console -->
+        <toolWindow id="GPU Dev" anchor="bottom" icon="AllIcons.Toolwindows.ToolWindowRun"
+                    factoryClass="com.gpudev.accelerator.toolwindow.GpuDevToolWindowFactory"/>
+
         <!-- Settings -->
-        <applicationConfigurable parentId="tools" 
+        <applicationConfigurable parentId="tools"
                                  instance="com.gpudev.accelerator.settings.GPUDevSettingsConfigurable"
                                  id="com.gpudev.accelerator.settings"
                                  displayName="GPU Dev Accelerator"/>
-        
+
         <!-- Inspections -->
         <localInspection language="CUDA" shortName="CudaMemoryLeak"
                         bundle="messages.GPUDevBundle"
@@ -137,7 +143,7 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
                         enabledByDefault="true"
                         level="WARNING"
                         implementationClass="com.gpudev.accelerator.inspections.CudaMemoryLeakInspection"/>
-        
+
         <localInspection language="CUDA" shortName="CudaKernelOptimization"
                         bundle="messages.GPUDevBundle"
                         key="inspection.cuda.kernel.optimization"
@@ -145,13 +151,20 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
                         enabledByDefault="true"
                         level="WEAK WARNING"
                         implementationClass="com.gpudev.accelerator.inspections.CudaKernelOptimizationInspection"/>
-        
+
+        <localInspection language="CUDA" shortName="CudaErrorCheck"
+                        bundle="messages.GPUDevBundle"
+                        key="inspection.cuda.error.check"
+                        groupName="CUDA"
+                        enabledByDefault="true"
+                        level="WEAK WARNING"
+                        implementationClass="com.gpudev.accelerator.inspections.CudaErrorCheckInspection"/>
+
         <!-- Run Configurations -->
         <configurationType implementation="com.gpudev.accelerator.run.CudaConfigurationType"/>
         <configurationType implementation="com.gpudev.accelerator.run.MetalConfigurationType"/>
-        
-        <!-- License and Premium service registrations removed -->
-    
+
+        <notificationGroup id="GPU Dev Accelerator" displayType="BALLOON"/>
         <notificationGroup id="GPU Dev Accelerator Ultimate Feedback" displayType="BALLOON"/>
         <projectActivity implementation="com.gpudev.accelerator.feedback.FeedbackNotifier"/>
     </extensions>
@@ -159,56 +172,46 @@ The most advanced JetBrains plugin for GPU programming. Write, debug, profile, a
     <actions>
         <group id="GPUDev.MainMenu" text="GPU Dev" description="GPU Development Tools">
             <add-to-group group-id="MainMenu" anchor="before" relative-to-action="HelpMenu"/>
-            
-            <!-- Free Features -->
+
             <action id="GPUDev.CompileCuda" class="com.gpudev.accelerator.actions.CompileCudaAction"
-                    text="Compile CUDA" description="Compile CUDA source files">
+                    text="Compile CUDA File" description="Compile the current CUDA file with nvcc">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>
             </action>
-            
+
+            <action id="GPUDev.ShowPtx" class="com.gpudev.accelerator.actions.ShowPtxAction"
+                    text="Show PTX" description="Compile the current CUDA file to PTX and open it"/>
+
             <action id="GPUDev.ShowGPUInfo" class="com.gpudev.accelerator.actions.ShowGPUInfoAction"
-                    text="GPU Information" description="Show available GPU devices"/>
-            
+                    text="GPU Information" description="Show detected GPU devices and toolchain versions"/>
+
             <separator/>
-            
-            <action id="GPUDev.AdvancedDebug" class="com.gpudev.accelerator.actions.AdvancedDebugAction"
-                    text="Advanced CUDA Debug" description="Start advanced debugging with cuda-gdb">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt D"/>
-            </action>
-            
-            <action id="GPUDev.ProfileWithFlameGraph" class="com.gpudev.accelerator.actions.ProfileWithFlameGraphAction"
-                    text="Profile with Flame Graph" description="Real-time profiling with flame graphs">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt P"/>
-            </action>
-            
-            <action id="GPUDev.AIOptimizeKernel" class="com.gpudev.accelerator.actions.AIOptimizeKernelAction"
-                    text="AI Optimize Kernel" description="Get AI-powered optimization suggestions">
+
+            <action id="GPUDev.AnalyzeKernel" class="com.gpudev.accelerator.actions.AnalyzeKernelAction"
+                    text="Analyze Kernel (Static Heuristics)" description="Run deterministic performance heuristics on the current file">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt O"/>
             </action>
-            
-            <action id="GPUDev.VisualizeMultiGPU" class="com.gpudev.accelerator.actions.VisualizeMultiGPUAction"
-                    text="Multi-GPU Topology" description="Visualize GPU topology and workload distribution">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/>
-            </action>
-            
-            <action id="GPUDev.AdvancedMemoryCheck" class="com.gpudev.accelerator.actions.AdvancedMemoryCheckAction"
-                    text="Advanced Memory Analysis" description="Detect memory leaks and race conditions">
+
+            <action id="GPUDev.OccupancyCalculator" class="com.gpudev.accelerator.actions.OccupancyCalculatorAction"
+                    text="Occupancy Calculator" description="Theoretical SM occupancy calculator"/>
+
+            <action id="GPUDev.MigrateKernel" class="com.gpudev.accelerator.actions.MigrateKernelAction"
+                    text="Migrate Kernel to Another Platform" description="Generate a CUDA/Metal/OpenCL/HIP port of the current kernel"/>
+
+            <separator/>
+
+            <action id="GPUDev.MemoryCheck" class="com.gpudev.accelerator.actions.MemoryCheckAction"
+                    text="Memory Check (compute-sanitizer)" description="Run compute-sanitizer against a CUDA executable">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt M"/>
             </action>
-            
-            <separator/>
-            
-            <action id="GPUDev.MemoryCheck" class="com.gpudev.accelerator.actions.MemoryCheckAction"
-                    text="Memory Check" description="Run cuda-memcheck"/>
-            
-            <action id="GPUDev.OptimizeKernel" class="com.gpudev.accelerator.actions.OptimizeKernelAction"
-                    text="Kernel Optimization" description="Get optimization suggestions">
-                    <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift O"/>
-            </action>
-            
+
             <action id="GPUDev.ProfileKernel" class="com.gpudev.accelerator.actions.ProfileKernelAction"
-                    text="Profiling" description="Profile GPU kernel performance">
+                    text="Profile Executable (Nsight Compute)" description="Profile a CUDA executable with ncu or nvprof">
                     <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift P"/>
+            </action>
+
+            <action id="GPUDev.VisualizeMultiGPU" class="com.gpudev.accelerator.actions.VisualizeMultiGPUAction"
+                    text="Multi-GPU Topology" description="Visualize the real GPU topology reported by nvidia-smi">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt G"/>
             </action>
         </group>
     </actions>

@@ -1,0 +1,40 @@
+<templateSet group="GPU Dev">
+  <template name="cukernel" value="__global__ void $NAME$($TYPE$* __restrict__ data, int n) {&#10;    int idx = blockIdx.x * blockDim.x + threadIdx.x;&#10;    if (idx &lt; n) {&#10;        $END$&#10;    }&#10;}" description="CUDA kernel with bounds check" toReformat="false" toShortenFQNames="false">
+    <variable name="NAME" expression="" defaultValue="&quot;myKernel&quot;" alwaysStopAt="true"/>
+    <variable name="TYPE" expression="" defaultValue="&quot;float&quot;" alwaysStopAt="true"/>
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+  <template name="cugridstride" value="for (int i = blockIdx.x * blockDim.x + threadIdx.x; i &lt; $N$; i += blockDim.x * gridDim.x) {&#10;    $END$&#10;}" description="Grid-stride loop" toReformat="false" toShortenFQNames="false">
+    <variable name="N" expression="" defaultValue="&quot;n&quot;" alwaysStopAt="true"/>
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+  <template name="cucheck" value="#define CUDA_CHECK(call)                                                    \&#10;    do {                                                                    \&#10;        cudaError_t err__ = (call);                                         \&#10;        if (err__ != cudaSuccess) {                                         \&#10;            fprintf(stderr, &quot;CUDA error %s at %s:%d\n&quot;,                     \&#10;                    cudaGetErrorString(err__), __FILE__, __LINE__);         \&#10;            exit(EXIT_FAILURE);                                             \&#10;        }                                                                   \&#10;    } while (0)&#10;$END$" description="CUDA_CHECK error-handling macro" toReformat="false" toShortenFQNames="false">
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+  <template name="culaunch" value="int threads = $THREADS$;&#10;int blocks = ($N$ + threads - 1) / threads;&#10;$KERNEL$&lt;&lt;&lt;blocks, threads&gt;&gt;&gt;($ARGS$);&#10;CUDA_CHECK(cudaGetLastError());&#10;$END$" description="Kernel launch with computed grid" toReformat="false" toShortenFQNames="false">
+    <variable name="THREADS" expression="" defaultValue="&quot;256&quot;" alwaysStopAt="true"/>
+    <variable name="N" expression="" defaultValue="&quot;n&quot;" alwaysStopAt="true"/>
+    <variable name="KERNEL" expression="" defaultValue="&quot;myKernel&quot;" alwaysStopAt="true"/>
+    <variable name="ARGS" expression="" defaultValue="" alwaysStopAt="true"/>
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+  <template name="cushared" value="__shared__ $TYPE$ tile[$SIZE$];&#10;tile[threadIdx.x] = $SRC$[blockIdx.x * blockDim.x + threadIdx.x];&#10;__syncthreads();&#10;$END$" description="Shared-memory tile load with barrier" toReformat="false" toShortenFQNames="false">
+    <variable name="TYPE" expression="" defaultValue="&quot;float&quot;" alwaysStopAt="true"/>
+    <variable name="SIZE" expression="" defaultValue="&quot;256&quot;" alwaysStopAt="true"/>
+    <variable name="SRC" expression="" defaultValue="&quot;data&quot;" alwaysStopAt="true"/>
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+  <template name="cutime" value="cudaEvent_t start__, stop__;&#10;CUDA_CHECK(cudaEventCreate(&amp;start__));&#10;CUDA_CHECK(cudaEventCreate(&amp;stop__));&#10;CUDA_CHECK(cudaEventRecord(start__));&#10;$END$&#10;CUDA_CHECK(cudaEventRecord(stop__));&#10;CUDA_CHECK(cudaEventSynchronize(stop__));&#10;float ms__ = 0.f;&#10;CUDA_CHECK(cudaEventElapsedTime(&amp;ms__, start__, stop__));&#10;printf(&quot;elapsed: %.3f ms\n&quot;, ms__);" description="CUDA event timing block" toReformat="false" toShortenFQNames="false">
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+  <template name="mtlkernel" value="kernel void $NAME$(device $TYPE$* data [[buffer(0)]],&#10;                   constant uint&amp; n [[buffer(1)]],&#10;                   uint gid [[thread_position_in_grid]]) {&#10;    if (gid &lt; n) {&#10;        $END$&#10;    }&#10;}" description="Metal compute kernel with bounds check" toReformat="false" toShortenFQNames="false">
+    <variable name="NAME" expression="" defaultValue="&quot;myKernel&quot;" alwaysStopAt="true"/>
+    <variable name="TYPE" expression="" defaultValue="&quot;float&quot;" alwaysStopAt="true"/>
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+  <template name="clkernel" value="__kernel void $NAME$(__global $TYPE$* data, const uint n) {&#10;    size_t gid = get_global_id(0);&#10;    if (gid &lt; n) {&#10;        $END$&#10;    }&#10;}" description="OpenCL kernel with bounds check" toReformat="false" toShortenFQNames="false">
+    <variable name="NAME" expression="" defaultValue="&quot;myKernel&quot;" alwaysStopAt="true"/>
+    <variable name="TYPE" expression="" defaultValue="&quot;float&quot;" alwaysStopAt="true"/>
+    <context><option name="GPUDEV" value="true"/></context>
+  </template>
+</templateSet>

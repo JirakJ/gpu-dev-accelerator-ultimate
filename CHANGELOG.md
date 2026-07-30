@@ -1,5 +1,31 @@
 # Changelog
 
+## [2026.5.0] - 2026-07-30
+
+### Production overhaul — every feature now backed by a real tool or deterministic analysis
+
+### Added
+- **GPU Dev console** (tool window) with clickable `file:line` links from nvcc/compute-sanitizer output — replaces all modal result dialogs
+- **Show PTX** — compile the current `.cu` file to PTX and open it in the editor
+- **Occupancy Calculator** — theoretical SM occupancy for CC 7.0–9.0 with limiting-factor breakdown (warps/registers/shared memory/block cap)
+- **Migrate Kernel** action — CUDA ⇄ Metal/OpenCL/HIP source-port starting points, warnings in console
+- **Editor basics** for all three languages: Ctrl+/ commenting, brace matching, quick documentation (Ctrl+Q) for 100+ builtins
+- **8 live templates**: `cukernel`, `cugridstride`, `cucheck`, `culaunch`, `cushared`, `cutime`, `mtlkernel`, `clkernel`
+- **Unchecked CUDA API call** inspection with a "Wrap in CUDA_CHECK" quick fix (inserts the macro when missing)
+- **Settings page**: nvcc/compute-sanitizer/ncu paths, `-arch`, extra nvcc flags, Metal SDK, tool timeout
+
+### Changed
+- **Compile CUDA** now runs in the background (no more EDT freeze), respects configured `-arch`/flags, parses error counts into a notification
+- **GPU Information** reads real data: nvidia-smi device query, Apple GPUs via `system_profiler`, nvcc version — into the console, not a dialog
+- **Memory Check** runs compute-sanitizer (fallback cuda-memcheck) on a chosen executable and parses the error summary
+- **Profile Executable** runs Nsight Compute (`ncu --set basic`) or nvprof and streams the report
+- **Multi-GPU Topology** renders the actual topology from `nvidia-smi topo -m` (NV#/PIX/PHB/SYS links) with live utilization/memory/power
+- Memory-leak and kernel-heuristic inspections now register real editor problems (previously they reported nothing)
+- Code completion is catalog-based with API signatures (CUDA 50+, Metal 30+, OpenCL 25+ entries)
+
+### Removed
+- All simulated/mock "premium" outputs: fake profiler metrics, fake flame graph, fake memory reports, fake 4×RTX-4090 topology, fake distributed-GPU cluster manager, fake performance-regression tester, fake advanced debugger
+
 ## [2026.4.2] - 2026-04-18
 
 ### Changed
