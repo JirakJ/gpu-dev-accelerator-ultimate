@@ -76,7 +76,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
-    <product-descriptor code="PGPUDEVACCELERA" release-date="20260730" release-version="20265" optional="true"/>
+    <product-descriptor code="PGPUDEVACCELERA" release-date="20260730" release-version="20265"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- File Types -->
