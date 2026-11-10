@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.jakubjirak.gpudev.ultimate</id>
     <name>GPU Dev Accelerator Ultimate</name>
-    <vendor email="support@jakubjirak.com" url="https://jakubjirak.com">Jakub Jirak</vendor>
+    <vendor email="support@jakubjirak.com" url="https://github.com/JirakJ/gpu-dev-accelerator-ultimate">Jakub Jirak</vendor>
 
     <description><![CDATA[<h2>GPU Dev Accelerator Ultimate — CUDA, Metal, and OpenCL Development</h2>
 
@@ -49,11 +49,13 @@ Every feature is backed by a real tool integration or deterministic analysis —
 <ul>
   <li>Documentation: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/wiki">GitHub Wiki</a></li>
   <li>Community Forum: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/discussions">GitHub Discussions</a></li>
-  <li>Enterprise Support: support@jakubjirak.com</li>
+  <li>Email: support@jakubjirak.com</li>
   <li>Issues: <a href="https://github.com/JirakJ/gpu-dev-accelerator-ultimate/issues">GitHub Issues</a></li>
 </ul>]]></description>
 
     <change-notes><![CDATA[
+<h3>2026.8.0</h3><ul><li>The plugin is now completely free — all features unlocked, no license needed.</li><li>Source code is now open source under Apache-2.0: https://github.com/JirakJ/gpu-dev-accelerator-ultimate</li></ul>
+
         <h3>2026.5.0 — Production Overhaul</h3>
         <ul>
             <li><b>Real toolchain integration</b> — nvcc compilation now runs in the background with clickable errors in the new GPU Dev console; no more UI freezes or modal dialogs</li>
@@ -76,7 +78,6 @@ Every feature is backed by a real tool integration or deterministic analysis —
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
-    <product-descriptor code="PGPUDEVACCELERA" release-date="20260730" release-version="20265"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- File Types -->
