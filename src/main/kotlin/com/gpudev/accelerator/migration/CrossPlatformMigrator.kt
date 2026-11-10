@@ -1,4 +1,4 @@
-package com.gpudev.accelerator.premium
+package com.gpudev.accelerator.migration
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
