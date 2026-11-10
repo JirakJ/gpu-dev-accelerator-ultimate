@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2026 Jakub Jirák. All rights reserved.
- * Licensed under the terms of the JetBrains Marketplace EULA.
+ * Copyright (c) 2026 Jakub Jirák.
+ * Licensed under the Apache License, Version 2.0. See LICENSE for details.
  */
-package com.gpudev.accelerator.premium
+package com.gpudev.accelerator.migration
 
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile

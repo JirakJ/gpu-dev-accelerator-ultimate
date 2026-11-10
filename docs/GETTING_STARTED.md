@@ -57,7 +57,7 @@ nvcc hello.cu -o hello
 ./hello
 ```
 
-#### 4. Debug (Premium Feature)
+#### 4. Debug
 
 - Set breakpoints in your CUDA code
 - Right-click → `Debug with cuda-gdb`
@@ -85,7 +85,7 @@ xcrun -sdk macosx metal -c shader.metal -o shader.air
 xcrun -sdk macosx metallib shader.air -o shader.metallib
 ```
 
-#### 3. Profile (Premium Feature)
+#### 3. Profile
 
 - `Ctrl+Alt+P` to open GPU Profiler
 - Run your shader
@@ -93,7 +93,7 @@ xcrun -sdk macosx metallib shader.air -o shader.metallib
 
 ## Feature Tour
 
-### Free Tier Features
+### Core Features
 
 #### Syntax Highlighting
 - Full CUDA C/C++ syntax support
@@ -111,7 +111,7 @@ xcrun -sdk macosx metallib shader.air -o shader.metallib
 - Metal compiler integration
 - Error highlighting
 
-### Individual License Features
+### Advanced Features
 
 #### Advanced Debugging
 - cuda-gdb integration
@@ -139,20 +139,6 @@ Select CUDA code → `Ctrl+Alt+O` for suggestions:
 - Memory leak detection
 - Race condition detection
 - Invalid memory access warnings
-
-### Enterprise License Features
-
-#### Team Collaboration
-- Shared kernel libraries
-- Team performance benchmarks
-- Code review tools
-- Centralized license management
-
-#### Priority Support
-- 4-hour response time
-- Phone/video support
-- Dedicated account manager
-- Custom training
 
 ## Common Workflows
 
@@ -208,17 +194,6 @@ Navigate to `Settings` → `Tools` → `GPU Dev Accelerator`
 - Nsight Compute path
 - Sampling interval
 - Metrics to collect
-
-### License Activation
-
-1. Go to `Settings` → `Tools` → `GPU Dev Accelerator`
-2. Enter your license key: `GPUDEV-TYPE-XXXXXX-XXXXXX`
-3. Click `Activate License`
-4. Restart IDE
-
-#### Example License Keys
-- Individual: `GPUDEV-IND-ABC123-DEF456`
-- Enterprise: `GPUDEV-ENT-GHI789-JKL012`
 
 ## Keyboard Shortcuts
 
@@ -294,15 +269,6 @@ Navigate to `Settings` → `Tools` → `GPU Dev Accelerator`
    ```
 2. Verify: `xcrun metal --version`
 
-### Premium Features Not Working
-**Error:** "This feature requires Individual or Enterprise license"
-
-**Solution:**
-1. Check license status in Settings
-2. Ensure license is not expired
-3. Restart IDE after activation
-4. Contact support@gpudev.com if issues persist
-
 ### Profiler Not Launching
 **Error:** "nvprof not found"
 
@@ -323,13 +289,7 @@ Navigate to `Settings` → `Tools` → `GPU Dev Accelerator`
 - **Documentation:** https://docs.gpudev.com
 - **Community Forum:** https://forum.gpudev.com
 - **Email Support:** support@gpudev.com
-- **Enterprise Support:** enterprise@gpudev.com
 
-### Upgrade
-Ready for advanced features?
-- **Individual License:** $200-400/year
-- **Enterprise License:** $500-2000/seat/year
-- Visit https://gpudev.com/pricing
 
 ---
 

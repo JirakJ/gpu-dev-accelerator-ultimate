@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2026 Jakub Jirák. All rights reserved.
- * Licensed under the terms of the JetBrains Marketplace EULA.
+ * Copyright (c) 2026 Jakub Jirák.
+ * Licensed under the Apache License, Version 2.0. See LICENSE for details.
  */
 package com.gpudev.accelerator.actions
 
@@ -18,7 +18,7 @@ import com.intellij.util.ui.FormBuilder
 import com.gpudev.accelerator.cuda.CudaFileType
 import com.gpudev.accelerator.metal.MetalFileType
 import com.gpudev.accelerator.opencl.OpenCLFileType
-import com.gpudev.accelerator.premium.CrossPlatformMigrator
+import com.gpudev.accelerator.migration.CrossPlatformMigrator
 import com.gpudev.accelerator.tools.GpuConsoleService
 import javax.swing.JComponent
 

@@ -1,8 +1,10 @@
 # GPU Dev Accelerator Ultimate
 
-**CUDA, Metal, and OpenCL development for IntelliJ-based IDEs**
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE) ![Version](https://img.shields.io/badge/version-2026.8.0-green)
 
-[![Version](https://img.shields.io/badge/Version-2026.5.0-green.svg)](https://plugins.jetbrains.com)
+> **Free & open source.** Since 2026.8.0 the plugin is completely free — every feature is unlocked for everyone, no license needed — and the source code is available under the Apache License 2.0.
+
+**CUDA, Metal, and OpenCL development for IntelliJ-based IDEs**
 
 Write, compile, inspect, and analyze GPU code in one IDE. Every feature is backed by a
 real tool integration (nvcc, compute-sanitizer, Nsight Compute, nvidia-smi) or by
@@ -59,12 +61,12 @@ deterministic static analysis — no mock data.
 
 - Issues: https://github.com/JirakJ/gpu-dev-accelerator-ultimate/issues
 - Discussions: https://github.com/JirakJ/gpu-dev-accelerator-ultimate/discussions
-- Enterprise: support@jakubjirak.com
+- Email: support@jakubjirak.com
+
+## Contributing
+
+Issues and pull requests are welcome at https://github.com/JirakJ/gpu-dev-accelerator-ultimate.
 
 ## License
 
-See [LICENSE](LICENSE) for details.
-
----
-
-**© 2026 Jakub Jirák. All rights reserved.**
+Copyright 2026 Jakub Jirák. Licensed under the [Apache License, Version 2.0](LICENSE).

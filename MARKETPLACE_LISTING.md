@@ -40,30 +40,30 @@
 - **OpenCL** (`.cl`) — C syntax, cross-vendor support (NVIDIA, AMD, Intel)
 - **Coming soon:** Vulkan Compute, SYCL, ROCm/HIP
 
-#### 🐛 Advanced CUDA Debugging (Individual/Enterprise)
+#### 🐛 Advanced CUDA Debugging
 - Full **cuda-gdb** integration with breakpoint support
 - Thread inspection and warp-level stepping
 - Memory watchpoints for GPU memory
 - Keyboard shortcut: `Ctrl+Shift+Alt+D`
 
-#### 📊 Real-Time Profiling with Flame Graphs (Individual/Enterprise)
+#### 📊 Real-Time Profiling with Flame Graphs
 - **nvprof** and **Nsight Compute** integration
 - Occupancy and bandwidth metrics visualization
 - GPU kernel flame graphs for performance analysis
 - Keyboard shortcut: `Ctrl+Alt+P`
 
-#### 🤖 AI-Powered Kernel Optimization (Individual/Enterprise)
+#### 🤖 AI-Powered Kernel Optimization
 - **Memory coalescing** suggestions (up to 2.5× speedup)
 - **Bank conflict** detection (up to 1.3× speedup)
 - **Warp divergence** analysis (up to 1.8× speedup)
 - Keyboard shortcut: `Ctrl+Alt+O`
 
-#### 🖥️ Multi-GPU Topology Visualization (Individual/Enterprise)
+#### 🖥️ Multi-GPU Topology Visualization
 - Auto-detect GPU topology across the system
 - Real-time utilization and temperature monitoring
 - Keyboard shortcut: `Ctrl+Alt+G`
 
-#### 🧠 Advanced Memory Analysis (Individual/Enterprise)
+#### 🧠 Advanced Memory Analysis
 - Memory leak detection for GPU allocations
 - Race condition detection across threads
 - Allocation tracking and lifetime visualization
@@ -71,13 +71,10 @@
 
 ---
 
-### 💰 Pricing Model
+### 💰 Pricing
 
-| Tier             | Price                       | Highlights                                                    |
-|------------------|-----------------------------|---------------------------------------------------------------|
-| **Free**         | $0                          | CUDA/Metal/OpenCL syntax highlighting, basic code completion, simple compilation, basic GPU info |
-| **Individual**   | $29.99/month or $299/year   | All premium features: debugging, profiling, AI optimization, memory analysis, multi-GPU topology |
-| **Enterprise**   | $999+/year per seat         | Team collaboration, priority support, security features, dedicated account management |
+GPU Dev Accelerator Ultimate is **completely free and open source** (Apache License 2.0).
+Every feature is available to everyone — no license or subscription needed.
 
 ---
 
@@ -179,10 +176,8 @@
 - [ ] Screenshots captured (minimum 5, 1280×800px recommended)
 - [ ] Plugin signed with JetBrains Marketplace certificate
 - [ ] Changelog written for initial release
-- [ ] Pricing tiers configured in JetBrains Marketplace
 - [ ] Vendor verified on JetBrains Marketplace
 - [ ] Compatibility range tested (2023.2.5+)
-- [ ] License agreement uploaded
 - [ ] Support URL / email configured
 - [ ] README and documentation published
 - [ ] Landing page live at https://gpudev.com

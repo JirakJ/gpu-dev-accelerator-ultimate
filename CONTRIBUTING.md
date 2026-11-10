@@ -1,6 +1,6 @@
 # Contributing to GPU Dev Accelerator Ultimate
 
-Thank you for your interest in contributing! While this is a commercial plugin, we welcome community contributions.
+Thank you for your interest in contributing! GPU Dev Accelerator Ultimate is free and open source (Apache License 2.0), and community contributions are welcome.
 
 ## How to Contribute
 
@@ -35,7 +35,6 @@ Want to contribute code?
 - Create a feature branch
 - Make your changes
 - Submit a pull request
-- Sign our Contributor License Agreement (CLA)
 
 **Note:** Major features require discussion before implementation.
 
@@ -105,7 +104,6 @@ gpu-dev-accelerator-ultimate/
 │   │   │   ├── profiler/          # Profiling tools
 │   │   │   ├── actions/           # IDE actions
 │   │   │   ├── settings/          # Settings UI
-│   │   │   ├── license/           # License management
 │   │   │   └── optimization/      # AI optimizer
 │   │   └── resources/
 │   │       ├── META-INF/plugin.xml
@@ -140,7 +138,7 @@ feat: add support for CUDA 12.0
 fix: resolve memory leak in profiler
 docs: update getting started guide
 test: add tests for Metal parser
-refactor: simplify license validation
+refactor: simplify kernel analysis
 ```
 
 ## Testing
@@ -188,15 +186,6 @@ refactor: simplify license validation
    - Your contribution will be included in next release
    - You'll be credited in CONTRIBUTORS.md
 
-## Contributor License Agreement
-
-To contribute code, you must sign our CLA. This ensures:
-- You have the right to contribute your code
-- We can include it in our commercial product
-- Your contributions remain open source
-
-You'll be prompted to sign when submitting your first PR.
-
 ## Community Guidelines
 
 ### Be Respectful
@@ -222,7 +211,6 @@ You'll be prompted to sign when submitting your first PR.
 ### Contributors
 - Listed in CONTRIBUTORS.md
 - Mentioned in release notes
-- Receive free Individual license (if applicable)
 
 ### Top Contributors
 - Special recognition
@@ -231,7 +219,7 @@ You'll be prompted to sign when submitting your first PR.
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the same license as the project.
+By contributing, you agree that your contributions will be licensed under the Apache License 2.0, the same license as the project.
 
 ---
 
@@ -239,6 +227,5 @@ By contributing, you agree that your contributions will be licensed under the sa
 
 - **General:** community@gpudev.com
 - **Security:** security@gpudev.com
-- **Enterprise:** enterprise@gpudev.com
 
 Thank you for contributing to GPU Dev Accelerator Ultimate! 🚀
