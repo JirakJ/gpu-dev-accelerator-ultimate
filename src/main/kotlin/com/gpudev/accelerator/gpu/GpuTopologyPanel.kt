@@ -42,8 +42,9 @@ class GpuTopologyPanel(private val topology: GpuTopology) : JPanel() {
         g2.stroke = BasicStroke(2f)
         g2.color = JBColor.GRAY
         for (link in topology.links) {
-            val from = positions[link.from] ?: continue
-            val to = positions[link.to] ?: continue
+            val from = positions[link.from]
+            val to = positions[link.to]
+            if (from == null || to == null) continue
             g2.drawLine(from.x, from.y, to.x, to.y)
             g2.drawString(link.linkType, (from.x + to.x) / 2, (from.y + to.y) / 2 - 4)
         }

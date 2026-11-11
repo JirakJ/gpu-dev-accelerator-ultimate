@@ -100,18 +100,17 @@ gpu-dev-accelerator-ultimate/
 │   │   │   ├── cuda/              # CUDA language support
 │   │   │   ├── metal/             # Metal language support
 │   │   │   ├── opencl/            # OpenCL support
-│   │   │   ├── debugger/          # Debugging tools
-│   │   │   ├── profiler/          # Profiling tools
+│   │   │   ├── analysis/          # Static heuristics, occupancy
+│   │   │   ├── tools/             # nvcc / sanitizer / ncu integration
 │   │   │   ├── actions/           # IDE actions
 │   │   │   ├── settings/          # Settings UI
-│   │   │   └── optimization/      # AI optimizer
+│   │   │   └── migration/         # Kernel port starting points
 │   │   └── resources/
 │   │       ├── META-INF/plugin.xml
 │   │       └── messages/
 │   └── test/
 │       └── kotlin/
 ├── examples/                       # Example code
-├── docs/                          # Documentation
 ├── build.gradle.kts
 └── README.md
 ```

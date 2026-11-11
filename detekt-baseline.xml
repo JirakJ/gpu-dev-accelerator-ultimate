@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:CLikeLexer.kt$CLikeLexer$afterDot >= bufferEnd || buffer[afterDot].isDigit() || buffer[afterDot] == 'e' || buffer[afterDot] == 'E'</ID>
+    <ID>ComplexCondition:CLikeLexer.kt$CLikeLexer$pos > suffixStart &amp;&amp; pos &lt; bufferEnd &amp;&amp; (buffer[pos].isLetterOrDigit() || buffer[pos] == '_')</ID>
+    <ID>CyclomaticComplexMethod:CLikeLexer.kt$CLikeLexer$override fun advance()</ID>
+    <ID>CyclomaticComplexMethod:CLikeLexer.kt$CLikeLexer$private fun lexNumber()</ID>
+    <ID>CyclomaticComplexMethod:CLikeLexer.kt$CLikeLexer$private fun lexOperatorOrPunctuation()</ID>
+    <ID>CyclomaticComplexMethod:CLikeLexer.kt$CLikeLexer$private fun lexPreprocessor()</ID>
+    <ID>LoopWithTooManyJumpStatements:CLikeLexer.kt$CLikeLexer$while</ID>
+    <ID>NestedBlockDepth:CLikeLexer.kt$CLikeLexer$private fun lexOperatorOrPunctuation()</ID>
+    <ID>NestedBlockDepth:CLikeLexer.kt$CLikeLexer$private fun lexPreprocessor()</ID>
+    <ID>TooManyFunctions:CLikeLexer.kt$CLikeLexer : LexerBase</ID>
+  </CurrentIssues>
+</SmellBaseline>

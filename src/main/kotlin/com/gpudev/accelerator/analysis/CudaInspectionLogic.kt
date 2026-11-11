@@ -46,6 +46,9 @@ object CudaInspectionLogic {
         "cudaMemset", "cudaFree", "cudaFreeHost", "cudaDeviceSynchronize", "cudaStreamSynchronize",
         "cudaEventRecord", "cudaLaunchKernel", "cudaGetDeviceProperties", "cudaSetDevice"
     )
+    /** Call results that are assigned, returned, tested or wrapped in a check macro count as handled. */
+    private val HANDLED_CONTEXT = Regex("""CUDA_CHECK|checkCudaErrors|=|\breturn\b|\bif\b""")
+
     private val callPattern = Regex("""^\s*((?:${checkedApis.joinToString("|")})\s*\()""", RegexOption.MULTILINE)
 
     /**
@@ -59,9 +62,7 @@ object CudaInspectionLogic {
             val lineStart = text.lastIndexOf('\n', m.range.first).let { if (it < 0) 0 else it + 1 }
             val prevLineStart = text.lastIndexOf('\n', (lineStart - 2).coerceAtLeast(0)).let { if (it < 0) 0 else it + 1 }
             val context = text.substring(prevLineStart, callStart)
-            if (context.contains("CUDA_CHECK") || context.contains("checkCudaErrors") ||
-                context.contains("=") || context.contains("return") || context.contains("if")
-            ) continue
+            if (HANDLED_CONTEXT.containsMatchIn(context)) continue
             val callName = m.groupValues[1].removeSuffix("(").trim()
             findings.add(
                 TextFinding(

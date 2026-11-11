@@ -26,7 +26,8 @@ class ProfileKernelAction : AnAction() {
             NotificationGroupManager.getInstance().getNotificationGroup("GPU Dev Accelerator")
                 .createNotification(
                     "No GPU profiler found",
-                    "Install Nsight Compute (ncu) — it ships with the CUDA Toolkit — or set its path in Settings | Tools | GPU Dev Accelerator.",
+                    "Install Nsight Compute (ncu) — it ships with the CUDA Toolkit — " +
+                        "or set its path in Settings | Tools | GPU Dev Accelerator.",
                     NotificationType.WARNING
                 ).notify(project)
             return

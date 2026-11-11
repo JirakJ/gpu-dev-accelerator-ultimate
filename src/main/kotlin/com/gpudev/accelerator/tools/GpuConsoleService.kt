@@ -74,8 +74,8 @@ class GpuSourceLineFilter(private val project: Project) : Filter {
 
     override fun applyFilter(line: String, entireLength: Int): Filter.Result? {
         for (pattern in patterns) {
-            val m = pattern.find(line) ?: continue
-            val file = LocalFileSystem.getInstance().findFileByPath(m.groupValues[1]) ?: continue
+            val m = pattern.find(line)
+            val file = m?.let { LocalFileSystem.getInstance().findFileByPath(it.groupValues[1]) } ?: continue
             val lineNumber = (m.groupValues[2].toIntOrNull() ?: 1) - 1
             val startOffset = entireLength - line.length + m.range.first
             return Filter.Result(
