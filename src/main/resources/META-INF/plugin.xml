@@ -40,7 +40,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
 <h3>Requirements</h3>
 <ul>
-  <li>IntelliJ IDEA 2024.3+ or CLion 2024.3+ (any IntelliJ-based IDE)</li>
+  <li>Any IntelliJ-based IDE 2023.2 or newer</li>
   <li>NVIDIA CUDA Toolkit for compile/profile/sanitize features</li>
   <li>macOS for Apple GPU detection</li>
 </ul>
@@ -122,9 +122,6 @@ Every feature is backed by a real tool integration or deterministic analysis —
         <liveTemplateContext contextId="GPUDEV" implementation="com.gpudev.accelerator.templates.GpuTemplateContext"/>
         <defaultLiveTemplates file="/liveTemplates/GPUDev.xml"/>
 
-        <!-- Debugger -->
-        <programRunner implementation="com.gpudev.accelerator.debugger.CudaDebugRunner"/>
-        <xdebugger.breakpointType implementation="com.gpudev.accelerator.debugger.CudaLineBreakpointType"/>
 
         <!-- GPU Dev console -->
         <toolWindow id="GPU Dev" anchor="bottom" icon="AllIcons.Toolwindows.ToolWindowRun"
@@ -161,9 +158,6 @@ Every feature is backed by a real tool integration or deterministic analysis —
                         level="WEAK WARNING"
                         implementationClass="com.gpudev.accelerator.inspections.CudaErrorCheckInspection"/>
 
-        <!-- Run Configurations -->
-        <configurationType implementation="com.gpudev.accelerator.run.CudaConfigurationType"/>
-        <configurationType implementation="com.gpudev.accelerator.run.MetalConfigurationType"/>
 
         <notificationGroup id="GPU Dev Accelerator" displayType="BALLOON"/>
         <notificationGroup id="GPU Dev Accelerator Ultimate Feedback" displayType="BALLOON"/>

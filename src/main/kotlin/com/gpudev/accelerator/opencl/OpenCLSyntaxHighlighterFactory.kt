@@ -17,27 +17,8 @@ class OpenCLSyntaxHighlighterFactory : SyntaxHighlighterFactory() {
 class OpenCLSyntaxHighlighter : SyntaxHighlighter {
     override fun getHighlightingLexer() = OpenCLLexer()
 
-    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
-        return when (tokenType) {
-            OpenCLTokenTypes.KEYWORD -> KEYWORD_KEYS
-            OpenCLTokenTypes.TYPE_KEYWORD -> TYPE_KEYS
-            OpenCLTokenTypes.BUILTIN_FUNCTION -> BUILTIN_KEYS
-            OpenCLTokenTypes.QUALIFIER -> QUALIFIER_KEYS
-            OpenCLTokenTypes.LINE_COMMENT, OpenCLTokenTypes.BLOCK_COMMENT -> COMMENT_KEYS
-            OpenCLTokenTypes.STRING_LITERAL -> STRING_KEYS
-            OpenCLTokenTypes.CHAR_LITERAL -> STRING_KEYS
-            OpenCLTokenTypes.NUMBER -> NUMBER_KEYS
-            OpenCLTokenTypes.PREPROCESSOR -> PREPROCESSOR_KEYS
-            OpenCLTokenTypes.OPERATOR -> OPERATOR_KEYS
-            OpenCLTokenTypes.SEMICOLON, OpenCLTokenTypes.COMMA -> COMMA_KEYS
-            OpenCLTokenTypes.DOT -> DOT_KEYS
-            OpenCLTokenTypes.LBRACE, OpenCLTokenTypes.RBRACE -> BRACE_KEYS
-            OpenCLTokenTypes.LPAREN, OpenCLTokenTypes.RPAREN -> PAREN_KEYS
-            OpenCLTokenTypes.LBRACKET, OpenCLTokenTypes.RBRACKET -> BRACKET_KEYS
-            OpenCLTokenTypes.IDENTIFIER -> IDENTIFIER_KEYS
-            else -> EMPTY_KEYS
-        }
-    }
+    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> =
+        tokenType?.let { HIGHLIGHTS[it] } ?: EMPTY_KEYS
 
     companion object {
         private val KEYWORD_KEYS = arrayOf(DefaultLanguageHighlighterColors.KEYWORD)
@@ -62,5 +43,31 @@ class OpenCLSyntaxHighlighter : SyntaxHighlighter {
         private val BRACKET_KEYS = arrayOf(DefaultLanguageHighlighterColors.BRACKETS)
         private val IDENTIFIER_KEYS = arrayOf(DefaultLanguageHighlighterColors.IDENTIFIER)
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
+
+        private val HIGHLIGHTS: Map<IElementType, Array<TextAttributesKey>> by lazy {
+            mapOf(
+                OpenCLTokenTypes.KEYWORD to KEYWORD_KEYS,
+                OpenCLTokenTypes.TYPE_KEYWORD to TYPE_KEYS,
+                OpenCLTokenTypes.BUILTIN_FUNCTION to BUILTIN_KEYS,
+                OpenCLTokenTypes.QUALIFIER to QUALIFIER_KEYS,
+                OpenCLTokenTypes.LINE_COMMENT to COMMENT_KEYS,
+                OpenCLTokenTypes.BLOCK_COMMENT to COMMENT_KEYS,
+                OpenCLTokenTypes.STRING_LITERAL to STRING_KEYS,
+                OpenCLTokenTypes.CHAR_LITERAL to STRING_KEYS,
+                OpenCLTokenTypes.NUMBER to NUMBER_KEYS,
+                OpenCLTokenTypes.PREPROCESSOR to PREPROCESSOR_KEYS,
+                OpenCLTokenTypes.OPERATOR to OPERATOR_KEYS,
+                OpenCLTokenTypes.SEMICOLON to COMMA_KEYS,
+                OpenCLTokenTypes.COMMA to COMMA_KEYS,
+                OpenCLTokenTypes.DOT to DOT_KEYS,
+                OpenCLTokenTypes.LBRACE to BRACE_KEYS,
+                OpenCLTokenTypes.RBRACE to BRACE_KEYS,
+                OpenCLTokenTypes.LPAREN to PAREN_KEYS,
+                OpenCLTokenTypes.RPAREN to PAREN_KEYS,
+                OpenCLTokenTypes.LBRACKET to BRACKET_KEYS,
+                OpenCLTokenTypes.RBRACKET to BRACKET_KEYS,
+                OpenCLTokenTypes.IDENTIFIER to IDENTIFIER_KEYS
+            )
+        }
     }
 }

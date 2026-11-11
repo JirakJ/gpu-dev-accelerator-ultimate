@@ -44,7 +44,7 @@ class MigrateKernelAction : AnAction() {
         if (!dialog.showAndGet()) return
         val target = dialog.selectedTarget
 
-        val result = CrossPlatformMigrator(project).migrateKernel(psiFile, source, target)
+        val result = CrossPlatformMigrator().migrateKernel(psiFile, source, target)
         if (result.warnings.isNotEmpty() || result.performanceNotes.isNotEmpty()) {
             GpuConsoleService.getInstance(project).print(
                 "Migration $source → $target: ${psiFile.name}",

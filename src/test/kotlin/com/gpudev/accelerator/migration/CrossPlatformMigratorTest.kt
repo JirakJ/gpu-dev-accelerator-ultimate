@@ -4,7 +4,6 @@
  */
 package com.gpudev.accelerator.migration
 
-import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
 import io.mockk.every
 import io.mockk.mockk
@@ -15,11 +14,10 @@ import org.junit.jupiter.api.Test
 class CrossPlatformMigratorTest {
 
     private lateinit var migrator: CrossPlatformMigrator
-    private val project = mockk<Project>(relaxed = true)
 
     @BeforeEach
     fun setUp() {
-        migrator = CrossPlatformMigrator(project)
+        migrator = CrossPlatformMigrator()
     }
 
     private fun mockPsiFile(text: String): PsiFile {

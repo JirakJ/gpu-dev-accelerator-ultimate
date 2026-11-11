@@ -37,22 +37,11 @@ class FeedbackState : PersistentStateComponent<FeedbackState.State> {
 class FeedbackNotifier : ProjectActivity {
     override suspend fun execute(project: Project) {
         val state = FeedbackState.getInstance().state
-        val now = System.currentTimeMillis()
-
-        if (state.firstActivation == 0L) {
-            state.firstActivation = now
-            return
-        }
-
-        if (state.feedbackShown || state.dismissed) return
-
-        val daysSinceFirst = (now - state.firstActivation) / (1000 * 60 * 60 * 24)
-        if (daysSinceFirst < 7) return
-
+        if (!shouldShowFeedback(state, System.currentTimeMillis())) return
         state.feedbackShown = true
 
         val notification = NotificationGroupManager.getInstance()
-            .getNotificationGroup("GPU Dev Accelerator Ultimate Feedback")
+            .getNotificationGroup(NOTIFICATION_GROUP_ID)
             .createNotification(
                 "GPU Dev Accelerator Ultimate",
                 "You've been using this plugin for over a week — thank you! 🎉\nWe'd love your feedback to help us improve.",
@@ -72,5 +61,22 @@ class FeedbackNotifier : ProjectActivity {
             })
 
         notification.notify(project)
+    }
+
+    companion object {
+        /** Must match the `notificationGroup` id registered in plugin.xml. */
+        const val NOTIFICATION_GROUP_ID: String = "GPU Dev Accelerator Ultimate Feedback"
+        const val DAYS_BEFORE_PROMPT: Long = 7
+        private val DAY_MS: Long = java.util.concurrent.TimeUnit.DAYS.toMillis(1)
+
+        /** Decides whether the one-off feedback balloon is due at [now]; the first call only records activation. */
+        fun shouldShowFeedback(state: FeedbackState.State, now: Long): Boolean {
+            if (state.firstActivation == 0L) {
+                state.firstActivation = now
+                return false
+            }
+            if (state.feedbackShown || state.dismissed) return false
+            return (now - state.firstActivation) / DAY_MS >= DAYS_BEFORE_PROMPT
+        }
     }
 }

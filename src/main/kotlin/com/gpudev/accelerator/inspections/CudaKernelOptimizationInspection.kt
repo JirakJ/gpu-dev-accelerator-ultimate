@@ -24,21 +24,25 @@ class CudaKernelOptimizationInspection : LocalInspectionTool() {
                 val text = file.text
                 val lineOffsets = buildLineOffsets(text)
                 for (finding in KernelStaticAnalyzer.analyze(text)) {
-                    if (finding.line !in lineOffsets.indices) continue
-                    val start = lineOffsets[finding.line]
-                    val end = text.indexOf('\n', start).let { if (it < 0) text.length else it }
-                    if (start >= end) continue
+                    val range = lineRange(text, lineOffsets, finding.line) ?: continue
                     val highlight = when (finding.impact) {
                         KernelStaticAnalyzer.Impact.HIGH -> ProblemHighlightType.WARNING
                         else -> ProblemHighlightType.WEAK_WARNING
                     }
-                    holder.registerProblem(file, "${finding.title}: ${finding.detail}", highlight, TextRange(start, end))
+                    holder.registerProblem(file, "${finding.title}: ${finding.detail}", highlight, range)
                 }
             }
         }
     }
 
-    private fun buildLineOffsets(text: String): List<Int> {
+    /** Range of the (0-based) [line] without its newline, or null when the line is missing or empty. */
+    internal fun lineRange(text: String, lineOffsets: List<Int>, line: Int): TextRange? {
+        val start = lineOffsets.getOrNull(line) ?: return null
+        val end = text.indexOf('\n', start).let { if (it < 0) text.length else it }
+        return if (start < end) TextRange(start, end) else null
+    }
+
+    internal fun buildLineOffsets(text: String): List<Int> {
         val offsets = mutableListOf(0)
         text.forEachIndexed { i, c -> if (c == '\n') offsets.add(i + 1) }
         return offsets

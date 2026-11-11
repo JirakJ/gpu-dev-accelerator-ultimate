@@ -7,3 +7,9 @@ out/
 *.ipr
 .DS_Store
 .kotlin
+
+# IntelliJ Platform Gradle plugin cache
+.intellijPlatform/
+
+# Secrets
+.env
