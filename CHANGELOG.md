@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2026.9.0] - 2026-11-11
+
 ### Fixed
 - The unchecked-CUDA-call inspection treated any preceding line containing the letters "if" or "return" (e.g. "verify", "returned") as error handling; it now matches whole keywords only.
 

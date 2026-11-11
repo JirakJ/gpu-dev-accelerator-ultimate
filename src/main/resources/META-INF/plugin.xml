@@ -54,6 +54,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
 </ul>]]></description>
 
     <change-notes><![CDATA[
+<h3>2026.9.0</h3><ul><li>Unchecked-CUDA-call inspection matches whole if/return keywords only.</li><li>Removed CUDA/Metal run configurations, the debug runner and breakpoint type that could not work.</li></ul>
 <h3>2026.8.0</h3><ul><li>The plugin is now completely free — all features unlocked, no license needed.</li><li>Source code is now open source under Apache-2.0: https://github.com/JirakJ/gpu-dev-accelerator-ultimate</li></ul>
 
         <h3>2026.5.0 — Production Overhaul</h3>
