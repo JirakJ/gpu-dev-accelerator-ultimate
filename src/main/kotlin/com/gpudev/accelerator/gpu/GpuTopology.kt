@@ -22,18 +22,19 @@ data class GpuLink(val from: Int, val to: Int, val linkType: String)
 data class GpuTopology(val nodes: List<GpuNode>, val links: List<GpuLink>)
 
 object GpuTopologyParser {
+    private const val DEVICE_QUERY_COLUMNS = 7
 
     /**
-     * Parses `nvidia-smi --query-gpu=index,name,memory.total,memory.used,utilization.gpu,temperature.gpu,power.draw --format=csv,noheader,nounits`
+     * Parses the output of
+     * `nvidia-smi --query-gpu=index,name,memory.total,memory.used,utilization.gpu,temperature.gpu,power.draw`
+     * `--format=csv,noheader,nounits`.
      */
     fun parseDeviceQuery(csv: String): List<GpuNode> {
-        val nodes = mutableListOf<GpuNode>()
-        for (rawLine in csv.lineSequence()) {
+        return csv.lineSequence().mapNotNull { rawLine ->
             val parts = rawLine.split(",").map { it.trim() }
-            if (parts.size < 7) continue
-            val index = parts[0].toIntOrNull() ?: continue
-            nodes.add(
-                GpuNode(
+            val index = parts[0].toIntOrNull()
+            if (parts.size < DEVICE_QUERY_COLUMNS || index == null) return@mapNotNull null
+            GpuNode(
                     index = index,
                     name = parts[1],
                     memoryTotalMiB = parts[2].toIntOrNull() ?: 0,
@@ -42,9 +43,7 @@ object GpuTopologyParser {
                     temperatureC = parts[5].toIntOrNull() ?: 0,
                     powerDrawW = parts[6].toDoubleOrNull() ?: 0.0
                 )
-            )
-        }
-        return nodes
+        }.toList()
     }
 
     /**
@@ -59,9 +58,10 @@ object GpuTopologyParser {
         val links = mutableListOf<GpuLink>()
         for (line in lines.drop(headerIdx + 1)) {
             val cells = line.trim().split(Regex("\\s+"))
-            val rowLabel = cells.firstOrNull() ?: continue
-            if (!rowLabel.matches(Regex("GPU\\d+"))) continue
-            val from = rowLabel.removePrefix("GPU").toIntOrNull() ?: continue
+            val from = cells.firstOrNull()
+                ?.takeIf { it.matches(Regex("GPU\\d+")) }
+                ?.removePrefix("GPU")?.toIntOrNull()
+                ?: continue
             cells.drop(1).take(header.size).forEachIndexed { colIdx, cell ->
                 val to = header.getOrNull(colIdx)?.removePrefix("GPU")?.toIntOrNull() ?: return@forEachIndexed
                 if (from < to && cell != "X") {

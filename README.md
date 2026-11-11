@@ -37,7 +37,7 @@ deterministic static analysis — no mock data.
 
 ## Requirements
 
-- IntelliJ IDEA / CLion 2024.3+ (any IntelliJ-based IDE)
+- Any IntelliJ-based IDE 2023.2 or newer (build 232+)
 - NVIDIA CUDA Toolkit for compile/profile/sanitize features (`nvcc`, `compute-sanitizer`, `ncu` on PATH,
   or set paths in **Settings | Tools | GPU Dev Accelerator**)
 - macOS for Apple GPU detection
@@ -52,9 +52,10 @@ deterministic static analysis — no mock data.
 ## Development
 
 ```bash
-./gradlew test          # 136 unit tests
+./gradlew detekt test   # static analysis + unit tests
 ./gradlew runIde        # sandbox IDE
 ./gradlew buildPlugin   # build/distributions/*.zip
+./gradlew verifyPlugin  # JetBrains Plugin Verifier (also run in CI)
 ```
 
 ## Support

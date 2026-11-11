@@ -1,10 +1,9 @@
 package com.gpudev.accelerator.migration
 
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
 
-class CrossPlatformMigrator(private val project: Project) {
+class CrossPlatformMigrator {
     
     enum class GPUPlatform {
         CUDA, METAL, OPENCL, VULKAN, HIP, SYCL
@@ -30,7 +29,7 @@ class CrossPlatformMigrator(private val project: Project) {
             GPUPlatform.CUDA to GPUPlatform.HIP -> cudaToHIP(sourceCode)
             GPUPlatform.METAL to GPUPlatform.CUDA -> metalToCuda(sourceCode)
             GPUPlatform.OPENCL to GPUPlatform.CUDA -> openCLToCuda(sourceCode)
-            GPUPlatform.CUDA to GPUPlatform.VULKAN -> cudaToVulkan(sourceCode)
+            GPUPlatform.CUDA to GPUPlatform.VULKAN -> cudaToVulkan()
             else -> MigrationResult(
                 false,
                 "// Unsupported migration path",
@@ -245,7 +244,7 @@ class CrossPlatformMigrator(private val project: Project) {
         return MigrationResult(true, cudaCode, emptyList(), emptyList(), mappings)
     }
     
-    private fun cudaToVulkan(cudaCode: String): MigrationResult {
+    private fun cudaToVulkan(): MigrationResult {
         val warnings = listOf(
             "Vulkan Compute requires significant restructuring",
             "SPIR-V generation recommended for production code",

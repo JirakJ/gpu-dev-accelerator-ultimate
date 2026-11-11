@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- The unchecked-CUDA-call inspection treated any preceding line containing the letters "if" or "return" (e.g. "verify", "returned") as error handling; it now matches whole keywords only.
+
+### Removed
+- CUDA/Metal run configuration types that could not run anything (no settings, no launch state).
+- The CUDA "debug runner" and line-breakpoint type: debug launches only ran the program and breakpoints never hit.
+- Outdated getting-started guide that described debugger, Vulkan and AI features the plugin does not have.
+
 ## [2026.8.0] - 2026-11-10
 
 ### Changed

@@ -23,13 +23,13 @@ object NvccOutputParser {
         for (rawLine in output.lineSequence()) {
             val line = rawLine.trim()
             val m = nvccStyle.find(line) ?: gccStyle.find(line) ?: continue
-            val (file, lineNo, severity, message) = m.destructured
+            val groups = m.groupValues
             diagnostics.add(
                 Diagnostic(
-                    file = file,
-                    line = lineNo.toIntOrNull() ?: 0,
-                    severity = if (severity == "error") Severity.ERROR else Severity.WARNING,
-                    message = message
+                    file = groups[1],
+                    line = groups[2].toIntOrNull() ?: 0,
+                    severity = if (groups[3] == "error") Severity.ERROR else Severity.WARNING,
+                    message = groups[4]
                 )
             )
         }

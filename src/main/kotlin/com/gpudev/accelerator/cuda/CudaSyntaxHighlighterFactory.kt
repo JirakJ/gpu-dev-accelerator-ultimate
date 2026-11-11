@@ -17,27 +17,8 @@ class CudaSyntaxHighlighterFactory : SyntaxHighlighterFactory() {
 class CudaSyntaxHighlighter : SyntaxHighlighter {
     override fun getHighlightingLexer() = CudaLexer()
 
-    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
-        return when (tokenType) {
-            CudaTokenTypes.KEYWORD -> KEYWORD_KEYS
-            CudaTokenTypes.TYPE_KEYWORD -> TYPE_KEYS
-            CudaTokenTypes.BUILTIN_FUNCTION -> BUILTIN_KEYS
-            CudaTokenTypes.QUALIFIER -> QUALIFIER_KEYS
-            CudaTokenTypes.LINE_COMMENT, CudaTokenTypes.BLOCK_COMMENT -> COMMENT_KEYS
-            CudaTokenTypes.STRING_LITERAL -> STRING_KEYS
-            CudaTokenTypes.CHAR_LITERAL -> STRING_KEYS
-            CudaTokenTypes.NUMBER -> NUMBER_KEYS
-            CudaTokenTypes.PREPROCESSOR -> PREPROCESSOR_KEYS
-            CudaTokenTypes.OPERATOR -> OPERATOR_KEYS
-            CudaTokenTypes.SEMICOLON, CudaTokenTypes.COMMA -> COMMA_KEYS
-            CudaTokenTypes.DOT -> DOT_KEYS
-            CudaTokenTypes.LBRACE, CudaTokenTypes.RBRACE -> BRACE_KEYS
-            CudaTokenTypes.LPAREN, CudaTokenTypes.RPAREN -> PAREN_KEYS
-            CudaTokenTypes.LBRACKET, CudaTokenTypes.RBRACKET -> BRACKET_KEYS
-            CudaTokenTypes.IDENTIFIER -> IDENTIFIER_KEYS
-            else -> EMPTY_KEYS
-        }
-    }
+    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> =
+        tokenType?.let { HIGHLIGHTS[it] } ?: EMPTY_KEYS
 
     companion object {
         val KEYWORD = TextAttributesKey.createTextAttributesKey(
@@ -68,5 +49,31 @@ class CudaSyntaxHighlighter : SyntaxHighlighter {
         private val BRACKET_KEYS = arrayOf(DefaultLanguageHighlighterColors.BRACKETS)
         private val IDENTIFIER_KEYS = arrayOf(DefaultLanguageHighlighterColors.IDENTIFIER)
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
+
+        private val HIGHLIGHTS: Map<IElementType, Array<TextAttributesKey>> by lazy {
+            mapOf(
+                CudaTokenTypes.KEYWORD to KEYWORD_KEYS,
+                CudaTokenTypes.TYPE_KEYWORD to TYPE_KEYS,
+                CudaTokenTypes.BUILTIN_FUNCTION to BUILTIN_KEYS,
+                CudaTokenTypes.QUALIFIER to QUALIFIER_KEYS,
+                CudaTokenTypes.LINE_COMMENT to COMMENT_KEYS,
+                CudaTokenTypes.BLOCK_COMMENT to COMMENT_KEYS,
+                CudaTokenTypes.STRING_LITERAL to STRING_KEYS,
+                CudaTokenTypes.CHAR_LITERAL to STRING_KEYS,
+                CudaTokenTypes.NUMBER to NUMBER_KEYS,
+                CudaTokenTypes.PREPROCESSOR to PREPROCESSOR_KEYS,
+                CudaTokenTypes.OPERATOR to OPERATOR_KEYS,
+                CudaTokenTypes.SEMICOLON to COMMA_KEYS,
+                CudaTokenTypes.COMMA to COMMA_KEYS,
+                CudaTokenTypes.DOT to DOT_KEYS,
+                CudaTokenTypes.LBRACE to BRACE_KEYS,
+                CudaTokenTypes.RBRACE to BRACE_KEYS,
+                CudaTokenTypes.LPAREN to PAREN_KEYS,
+                CudaTokenTypes.RPAREN to PAREN_KEYS,
+                CudaTokenTypes.LBRACKET to BRACKET_KEYS,
+                CudaTokenTypes.RBRACKET to BRACKET_KEYS,
+                CudaTokenTypes.IDENTIFIER to IDENTIFIER_KEYS
+            )
+        }
     }
 }

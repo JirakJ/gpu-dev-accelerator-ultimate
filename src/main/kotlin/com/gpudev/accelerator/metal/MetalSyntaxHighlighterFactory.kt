@@ -17,27 +17,8 @@ class MetalSyntaxHighlighterFactory : SyntaxHighlighterFactory() {
 class MetalSyntaxHighlighter : SyntaxHighlighter {
     override fun getHighlightingLexer() = MetalLexer()
 
-    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
-        return when (tokenType) {
-            MetalTokenTypes.KEYWORD -> KEYWORD_KEYS
-            MetalTokenTypes.TYPE_KEYWORD -> TYPE_KEYS
-            MetalTokenTypes.BUILTIN_FUNCTION -> BUILTIN_KEYS
-            MetalTokenTypes.QUALIFIER -> QUALIFIER_KEYS
-            MetalTokenTypes.LINE_COMMENT, MetalTokenTypes.BLOCK_COMMENT -> COMMENT_KEYS
-            MetalTokenTypes.STRING_LITERAL -> STRING_KEYS
-            MetalTokenTypes.CHAR_LITERAL -> STRING_KEYS
-            MetalTokenTypes.NUMBER -> NUMBER_KEYS
-            MetalTokenTypes.PREPROCESSOR -> PREPROCESSOR_KEYS
-            MetalTokenTypes.OPERATOR -> OPERATOR_KEYS
-            MetalTokenTypes.SEMICOLON, MetalTokenTypes.COMMA -> COMMA_KEYS
-            MetalTokenTypes.DOT -> DOT_KEYS
-            MetalTokenTypes.LBRACE, MetalTokenTypes.RBRACE -> BRACE_KEYS
-            MetalTokenTypes.LPAREN, MetalTokenTypes.RPAREN -> PAREN_KEYS
-            MetalTokenTypes.LBRACKET, MetalTokenTypes.RBRACKET -> BRACKET_KEYS
-            MetalTokenTypes.IDENTIFIER -> IDENTIFIER_KEYS
-            else -> EMPTY_KEYS
-        }
-    }
+    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> =
+        tokenType?.let { HIGHLIGHTS[it] } ?: EMPTY_KEYS
 
     companion object {
         private val KEYWORD_KEYS = arrayOf(DefaultLanguageHighlighterColors.KEYWORD)
@@ -62,5 +43,31 @@ class MetalSyntaxHighlighter : SyntaxHighlighter {
         private val BRACKET_KEYS = arrayOf(DefaultLanguageHighlighterColors.BRACKETS)
         private val IDENTIFIER_KEYS = arrayOf(DefaultLanguageHighlighterColors.IDENTIFIER)
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
+
+        private val HIGHLIGHTS: Map<IElementType, Array<TextAttributesKey>> by lazy {
+            mapOf(
+                MetalTokenTypes.KEYWORD to KEYWORD_KEYS,
+                MetalTokenTypes.TYPE_KEYWORD to TYPE_KEYS,
+                MetalTokenTypes.BUILTIN_FUNCTION to BUILTIN_KEYS,
+                MetalTokenTypes.QUALIFIER to QUALIFIER_KEYS,
+                MetalTokenTypes.LINE_COMMENT to COMMENT_KEYS,
+                MetalTokenTypes.BLOCK_COMMENT to COMMENT_KEYS,
+                MetalTokenTypes.STRING_LITERAL to STRING_KEYS,
+                MetalTokenTypes.CHAR_LITERAL to STRING_KEYS,
+                MetalTokenTypes.NUMBER to NUMBER_KEYS,
+                MetalTokenTypes.PREPROCESSOR to PREPROCESSOR_KEYS,
+                MetalTokenTypes.OPERATOR to OPERATOR_KEYS,
+                MetalTokenTypes.SEMICOLON to COMMA_KEYS,
+                MetalTokenTypes.COMMA to COMMA_KEYS,
+                MetalTokenTypes.DOT to DOT_KEYS,
+                MetalTokenTypes.LBRACE to BRACE_KEYS,
+                MetalTokenTypes.RBRACE to BRACE_KEYS,
+                MetalTokenTypes.LPAREN to PAREN_KEYS,
+                MetalTokenTypes.RPAREN to PAREN_KEYS,
+                MetalTokenTypes.LBRACKET to BRACKET_KEYS,
+                MetalTokenTypes.RBRACKET to BRACKET_KEYS,
+                MetalTokenTypes.IDENTIFIER to IDENTIFIER_KEYS
+            )
+        }
     }
 }

@@ -1,64 +1,94 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.21"
-    id("org.jetbrains.intellij") version "1.16.1"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.intellij.platform)
+    alias(libs.plugins.detekt)
 }
 
-val pluginGroup: String by project
-val pluginVersion: String by project
+group = providers.gradleProperty("pluginGroup").get()
+version = providers.gradleProperty("pluginVersion").get()
 
-group = pluginGroup
-version = pluginVersion
+kotlin {
+    jvmToolchain(providers.gradleProperty("javaVersion").get().toInt())
+}
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("org.java-websocket:Java-WebSocket:1.5.4")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
-    testImplementation("io.mockk:mockk:1.13.8")
+    intellijPlatform {
+        create(
+            providers.gradleProperty("platformType"),
+            providers.gradleProperty("platformVersion"),
+        )
+        pluginVerifier()
+        zipSigner()
+    }
+
+    testImplementation(libs.junit.api)
+    testRuntimeOnly(libs.junit.engine)
+    testImplementation(libs.mockk)
 }
 
-intellij {
-    version.set("2023.2.5")
-    type.set("IC")
-    plugins.set(listOf("com.intellij.java"))
+// Exclude IDE-provided libraries from plugin distribution
+configurations {
+    runtimeClasspath {
+        exclude(group = "org.jetbrains.kotlin")
+        exclude(group = "org.jetbrains", module = "annotations")
+    }
+}
+
+intellijPlatform {
+    buildSearchableOptions = false
+
+    pluginConfiguration {
+        // id and name come from plugin.xml (com.jakubjirak.gpudev.ultimate) — never derive them from pluginGroup.
+        version = providers.gradleProperty("pluginVersion")
+
+        ideaVersion {
+            sinceBuild = providers.gradleProperty("pluginSinceBuild")
+            untilBuild = provider { null }
+        }
+    }
+
+    pluginVerification {
+        ides {
+            ide("IC", "2023.2.8")
+            ide("IC", "2024.3")
+            ide("IC", "2025.1.3")
+        }
+    }
+
+    signing {
+        // Configure via environment variables:
+        // ORG_GRADLE_PROJECT_signCertificateChain
+        // ORG_GRADLE_PROJECT_signPrivateKey
+        // ORG_GRADLE_PROJECT_signPassword
+    }
+
+    publishing {
+        token = providers.environmentVariable("PLUGIN_TOKEN")
+    }
 }
 
 tasks {
-    withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
-    }
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
     test {
         useJUnitPlatform()
     }
 
-    patchPluginXml {
-        sinceBuild.set("232")
-        untilBuild.set("")
+    wrapper {
+        gradleVersion = "8.12"
     }
+}
 
-    runPluginVerifier {
-        ideVersions.set(listOf("IC-2023.2.8", "IC-2024.3", "IC-2025.1.3"))
-    }
-
-    signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
-    }
-
-    publishPlugin {
-        token.set(System.getenv("PLUGIN_TOKEN"))
-    }
+detekt {
+    config.setFrom(files("detekt.yml"))
+    buildUponDefaultConfig = true
+    // Only the hand-written CLikeLexer state machine is baselined (complexity of its scanning
+    // functions); splitting it is a risky refactor of a heavily tested lexer.
+    baseline = file("detekt-baseline.xml")
 }
