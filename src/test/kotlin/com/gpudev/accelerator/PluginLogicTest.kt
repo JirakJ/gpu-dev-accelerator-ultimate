@@ -54,7 +54,10 @@ class PluginLogicTest {
         val settings = GpuDevSettings()
         val state = settings.state
         assertEquals("", state.nvccPath)
-        assertEquals("macosx", state.metalSdk)
+        assertEquals("", state.gpuArch)
+        assertEquals("", state.extraNvccFlags)
+        assertEquals("", state.sanitizerPath)
+        assertEquals("", state.ncuPath)
         assertEquals(300, state.toolTimeoutSeconds)
         val loaded = GpuDevSettings.State(nvccPath = "/usr/local/cuda/bin/nvcc", toolTimeoutSeconds = 10)
         settings.loadState(loaded)

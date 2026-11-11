@@ -22,7 +22,6 @@ class GPUDevSettingsConfigurable : Configurable {
     private val ncuField = TextFieldWithBrowseButton()
     private val archField = JBTextField()
     private val flagsField = JBTextField()
-    private val metalSdkField = JBTextField()
     private val timeoutSpinner = JSpinner(SpinnerNumberModel(300, 10, 3600, 10))
 
     override fun getDisplayName(): String = "GPU Dev Accelerator"
@@ -35,7 +34,6 @@ class GPUDevSettingsConfigurable : Configurable {
 
         archField.toolTipText = "e.g. sm_86 — passed as -arch=<value>; empty = nvcc default"
         flagsField.toolTipText = "Extra flags appended to every nvcc invocation, e.g. -O3 --use_fast_math"
-        metalSdkField.toolTipText = "SDK for xcrun metal compilation: macosx or iphoneos"
 
         panel = FormBuilder.createFormBuilder()
             .addLabeledComponent("nvcc path (empty = PATH):", nvccField)
@@ -43,7 +41,6 @@ class GPUDevSettingsConfigurable : Configurable {
             .addLabeledComponent("Extra nvcc flags:", flagsField)
             .addLabeledComponent("compute-sanitizer path:", sanitizerField)
             .addLabeledComponent("Nsight Compute (ncu) path:", ncuField)
-            .addLabeledComponent("Metal SDK (xcrun -sdk):", metalSdkField)
             .addLabeledComponent("Tool timeout (seconds):", timeoutSpinner)
             .addComponentFillVertically(JPanel(), 0)
             .panel
@@ -58,7 +55,6 @@ class GPUDevSettingsConfigurable : Configurable {
             flagsField.text != s.extraNvccFlags ||
             sanitizerField.text != s.sanitizerPath ||
             ncuField.text != s.ncuPath ||
-            metalSdkField.text != s.metalSdk ||
             (timeoutSpinner.value as Int) != s.toolTimeoutSeconds
     }
 
@@ -69,7 +65,6 @@ class GPUDevSettingsConfigurable : Configurable {
         s.extraNvccFlags = flagsField.text.trim()
         s.sanitizerPath = sanitizerField.text.trim()
         s.ncuPath = ncuField.text.trim()
-        s.metalSdk = metalSdkField.text.trim().ifBlank { "macosx" }
         s.toolTimeoutSeconds = timeoutSpinner.value as Int
     }
 
@@ -80,7 +75,6 @@ class GPUDevSettingsConfigurable : Configurable {
         flagsField.text = s.extraNvccFlags
         sanitizerField.text = s.sanitizerPath
         ncuField.text = s.ncuPath
-        metalSdkField.text = s.metalSdk
         timeoutSpinner.value = s.toolTimeoutSeconds
     }
 

@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2026.9.1] - 2026-11-12
+
+### Removed
+- The "Metal SDK (xcrun -sdk)" setting: the plugin never invokes `xcrun` or the Metal compiler, so the value had no effect. Metal support is editor-only (highlighting, completion, documentation, Migrate Kernel).
+
 ## [2026.9.0] - 2026-11-11
 
 ### Fixed

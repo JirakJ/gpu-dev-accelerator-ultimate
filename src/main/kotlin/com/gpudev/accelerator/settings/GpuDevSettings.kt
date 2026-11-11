@@ -27,7 +27,6 @@ class GpuDevSettings : PersistentStateComponent<GpuDevSettings.State> {
         var extraNvccFlags: String = "",
         var sanitizerPath: String = "",
         var ncuPath: String = "",
-        var metalSdk: String = "macosx",
         var toolTimeoutSeconds: Int = 300
     )
 
