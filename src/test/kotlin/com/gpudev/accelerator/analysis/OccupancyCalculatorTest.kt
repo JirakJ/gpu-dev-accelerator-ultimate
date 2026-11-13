@@ -68,4 +68,13 @@ class OccupancyCalculatorTest {
         assertEquals(0, r.activeBlocksPerSm)
         assertEquals(0.0, r.occupancy)
     }
+
+    @Test
+    fun `blackwell RTX 50xx preset present with expected limits`() {
+        val cc120 = OccupancyCalculator.PRESETS.first { it.computeCapability == "12.0" }
+        assertEquals(1536, cc120.maxThreadsPerSm)
+        assertEquals(24, cc120.maxBlocksPerSm)
+        assertEquals(65536, cc120.registersPerSm)
+        assertEquals(100 * 1024, cc120.sharedMemPerSmBytes)
+    }
 }

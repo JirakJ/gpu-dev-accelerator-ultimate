@@ -21,23 +21,27 @@ deterministic static analysis — no mock data.
 
 ### Toolchain integration (GPU Dev console, background tasks)
 - **Compile CUDA File** (Ctrl+Alt+C) — nvcc with configured `-arch`/flags, clickable errors
-- **Show PTX** — inspect the code nvcc actually generates for the current file
+- **Show Assembly** — inspect source-mapped SASS by default; enable PTX as a second pane
 - **Memory Check** (Ctrl+Alt+M) — compute-sanitizer (or cuda-memcheck) on an executable
 - **Profile Executable** (Ctrl+Shift+P) — Nsight Compute (`ncu`) or nvprof report
 - **GPU Information** — nvidia-smi device query + Apple GPUs via system_profiler
 - **Multi-GPU Topology** (Ctrl+Alt+G) — real link matrix from `nvidia-smi topo -m` with live utilization
+- **Remote execution** — in CLion every action above runs on the default SSH toolchain: local↔remote paths
+  are mapped through CLion's deployment settings, and plugin-managed uploads/downloads stay optional
+  (off by default for shared mounts and CLion-synchronized projects)
 
 ### Static analysis
 - Inspections: GPU memory leaks (cudaMalloc/cudaFree pairing), unchecked CUDA API calls
   (with a **Wrap in CUDA_CHECK** quick fix), kernel performance heuristics
 - **Analyze Kernel** (Ctrl+Alt+O) — strided access, warp divergence, `__syncthreads()` in
   divergent branches, missing bounds checks, missing `__restrict__`, device-side malloc, and more
-- **Occupancy Calculator** — theoretical SM occupancy for CC 7.0–9.0 with limiting-factor breakdown
+- **Occupancy Calculator** — theoretical SM occupancy for CC 7.0–12.0 with limiting-factor breakdown
 - **Migrate Kernel** — CUDA ⇄ Metal / OpenCL / HIP source-port starting points
 
 ## Requirements
 
 - Any IntelliJ-based IDE 2023.2 or newer (build 232+)
+- CLion 2023.2+ with a default SSH toolchain for remote execution (other IDEs run the tools locally)
 - NVIDIA CUDA Toolkit for compile/profile/sanitize features (`nvcc`, `compute-sanitizer`, `ncu` on PATH,
   or set paths in **Settings | Tools | GPU Dev Accelerator**)
 - macOS for Apple GPU detection

@@ -20,9 +20,9 @@ class ShowGPUInfoAction : AnAction() {
         val project = e.project ?: return
         GpuToolchain.inBackground(project, "Detecting GPU devices", { _ ->
             buildString {
-                val smi = GpuToolchain.nvidiaSmi()
+                val smi = GpuToolchain.nvidiaSmi(project)
                 if (smi != null) {
-                    val result = GpuToolchain.run(
+                    val result = GpuToolchain.run(project,
                         listOf(
                             smi,
                             "--query-gpu=index,name,driver_version,memory.total,memory.used,utilization.gpu,temperature.gpu,power.draw",
@@ -37,7 +37,7 @@ class ShowGPUInfoAction : AnAction() {
                 }
 
                 if (SystemInfo.isMac) {
-                    val result = GpuToolchain.run(listOf("system_profiler", "SPDisplaysDataType"))
+                    val result = GpuToolchain.runLocal(listOf("system_profiler", "SPDisplaysDataType"))
                     if (result.success) {
                         append("\nApple GPUs (system_profiler):\n")
                         append(result.stdout.trim())
@@ -45,9 +45,9 @@ class ShowGPUInfoAction : AnAction() {
                     }
                 }
 
-                val nvcc = GpuToolchain.nvcc()
+                val nvcc = GpuToolchain.nvcc(project)
                 if (nvcc != null) {
-                    val version = GpuToolchain.run(listOf(nvcc, "--version"))
+                    val version = GpuToolchain.run(project, listOf(nvcc, "--version"))
                     append("\nnvcc: $nvcc\n")
                     append(version.stdout.lines().lastOrNull { it.isNotBlank() } ?: "")
                     append('\n')

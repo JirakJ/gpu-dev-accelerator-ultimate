@@ -21,8 +21,9 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
 <h3>Toolchain Integration</h3>
 <ul>
-  <li>Compile CUDA files with nvcc in the background — errors clickable in the GPU Dev console</li>
-  <li>Show PTX for the current file to inspect generated code</li>
+  <li>Compile CUDA files locally or through CLion's default remote SSH toolchain —
+      errors clickable in the GPU Dev console</li>
+  <li>Show CUDA SASS beside its source, with optional PTX comparison and source-line mapping</li>
   <li>Memory checking via compute-sanitizer (or cuda-memcheck)</li>
   <li>Kernel profiling via Nsight Compute (ncu) or nvprof</li>
   <li>GPU inventory from nvidia-smi and system_profiler (Apple GPUs)</li>
@@ -34,7 +35,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
 <ul>
   <li>Inspections: GPU memory leaks (cudaMalloc without cudaFree), unchecked CUDA API calls with a CUDA_CHECK quick fix, kernel performance heuristics</li>
   <li>Kernel heuristics: strided access, warp divergence, __syncthreads() in divergent branches, missing bounds checks, missing __restrict__, device-side malloc, and more</li>
-  <li>Theoretical occupancy calculator for Volta through Hopper</li>
+  <li>Theoretical occupancy calculator for Volta through Blackwell</li>
   <li>Cross-platform kernel migration starting points (CUDA ⇄ Metal / OpenCL / HIP)</li>
 </ul>
 
@@ -62,7 +63,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
         <ul>
             <li><b>Real toolchain integration</b> — nvcc compilation now runs in the background with clickable errors in the new GPU Dev console; no more UI freezes or modal dialogs</li>
             <li><b>New: Show PTX</b> — compile the current .cu file to PTX and inspect the generated code in the editor</li>
-            <li><b>New: Occupancy calculator</b> — theoretical SM occupancy for Volta through Hopper with limiting-factor breakdown</li>
+            <li><b>New: Occupancy calculator</b> — theoretical SM occupancy for Volta through Blackwell with limiting-factor breakdown</li>
             <li><b>New: Migrate Kernel action</b> — CUDA ⇄ Metal/OpenCL/HIP source porting starting points</li>
             <li><b>New: editor basics</b> — Ctrl+/ commenting, brace matching, 8 live templates, quick documentation for 100+ GPU builtins</li>
             <li><b>Real inspections</b> — memory-leak and unchecked-API-call inspections now report problems in the editor; quick fix wraps calls in CUDA_CHECK</li>
@@ -79,12 +80,17 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="clion.xml">com.intellij.clion</depends>
 
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- File Types -->
         <fileType name="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaFileType"
                   fieldName="INSTANCE" language="CUDA" extensions="cu;cuh"/>
+        <fileType name="PTX" implementationClass="com.gpudev.accelerator.cuda.ptx.PtxFileType"
+                  fieldName="INSTANCE" language="PTX" extensions="ptx"/>
+        <fileType name="CUDA SASS" implementationClass="com.gpudev.accelerator.cuda.sass.SassFileType"
+                  fieldName="INSTANCE" language="CUDA_SASS" extensions="sassasm"/>
         <fileType name="Metal" implementationClass="com.gpudev.accelerator.metal.MetalFileType"
                   fieldName="INSTANCE" language="Metal" extensions="metal"/>
         <fileType name="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLFileType"
@@ -92,11 +98,15 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
         <!-- Languages -->
         <lang.parserDefinition language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaParserDefinition"/>
+        <lang.parserDefinition language="PTX" implementationClass="com.gpudev.accelerator.cuda.ptx.PtxParserDefinition"/>
+        <lang.parserDefinition language="CUDA_SASS" implementationClass="com.gpudev.accelerator.cuda.sass.SassParserDefinition"/>
         <lang.parserDefinition language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalParserDefinition"/>
         <lang.parserDefinition language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLParserDefinition"/>
 
         <!-- Syntax Highlighting -->
         <lang.syntaxHighlighterFactory language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="PTX" implementationClass="com.gpudev.accelerator.cuda.ptx.PtxSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="CUDA_SASS" implementationClass="com.gpudev.accelerator.cuda.sass.SassSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLSyntaxHighlighterFactory"/>
 
@@ -175,8 +185,10 @@ Every feature is backed by a real tool integration or deterministic analysis —
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>
             </action>
 
-            <action id="GPUDev.ShowPtx" class="com.gpudev.accelerator.actions.ShowPtxAction"
-                    text="Show PTX" description="Compile the current CUDA file to PTX and open it"/>
+            <action id="GPUDev.ShowAssembly" class="com.gpudev.accelerator.actions.ShowAssemblyAction"
+                    text="Show Assembly (CUDA)" description="Compare CUDA source with generated SASS and optional PTX">
+                <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            </action>
 
             <action id="GPUDev.ShowGPUInfo" class="com.gpudev.accelerator.actions.ShowGPUInfoAction"
                     text="GPU Information" description="Show detected GPU devices and toolchain versions"/>
