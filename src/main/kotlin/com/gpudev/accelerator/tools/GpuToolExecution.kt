@@ -22,19 +22,22 @@ data class ToolResult(val exitCode: Int, val stdout: String, val stderr: String,
     val success: Boolean get() = exitCode == 0 && !timedOut
 }
 
-internal enum class ToolArtifactKind { INPUT, OUTPUT, TEMPORARY_OUTPUT, PATH_REFERENCE }
+internal enum class ToolArtifactKind { INPUT, OUTPUT, TEMPORARY_OUTPUT, INTERMEDIATE_OUTPUT, PATH_REFERENCE }
 
 internal data class ToolArtifact(val file: File, val kind: ToolArtifactKind)
 
 /**
- * File paths in [command] must match declared [artifacts] exactly. Remote transfers for project
- * files are opt-in; temporary outputs are always retrieved and removed. The caller owns local files.
+ * Paths in [commands] must match declared [artifacts] exactly. Remote transfers for project files
+ * are opt-in; temporary outputs are retrieved and removed, while intermediates are cleanup-only.
  */
 internal data class ToolInvocation(
     val command: List<String>,
     val workDir: File? = null,
-    val artifacts: List<ToolArtifact> = emptyList()
-)
+    val artifacts: List<ToolArtifact> = emptyList(),
+    val followUpCommands: List<List<String>> = emptyList()
+) {
+    val commands: List<List<String>> get() = listOf(command) + followUpCommands
+}
 
 /** Resolves tools and executes invocations for one machine and filesystem. */
 internal interface ToolExecutionAdapter {
@@ -67,11 +70,16 @@ internal class RemoteToolExecutionAdapter(private val transport: RemoteToolTrans
         }
         return try {
             uploadInputs(invocation, staged.paths, transferFiles)
-            val command = invocation.command.map { staged.paths[it] ?: it }
+            val commands = invocation.commands.map { command -> command.map { staged.paths[it] ?: it } }
             val workDirectory = invocation.workDir?.let { transport.toRemotePath(it.absolutePath) }
-            val result = transport.run(command, workDirectory, timeoutMs)
-            if (result.success) retrieveOutputs(invocation, staged.paths, transferFiles)
-            result
+            var result: ToolResult? = null
+            for (command in commands) {
+                result = transport.run(command, workDirectory, timeoutMs)
+                if (!result.success) break
+            }
+            val finalResult = result ?: ToolResult(-1, "", "No command was provided", false)
+            if (finalResult.success) retrieveOutputs(invocation, staged.paths, transferFiles)
+            finalResult
         } catch (e: Exception) {
             failure(e)
         } finally {
@@ -87,14 +95,20 @@ internal class RemoteToolExecutionAdapter(private val transport: RemoteToolTrans
         try {
             invocation.artifacts.forEach { artifact ->
                 val localPath = artifact.file.absolutePath
-                val remotePath = if (artifact.kind == ToolArtifactKind.TEMPORARY_OUTPUT) {
+                val remotePath = if (artifact.kind == ToolArtifactKind.TEMPORARY_OUTPUT ||
+                    artifact.kind == ToolArtifactKind.INTERMEDIATE_OUTPUT
+                ) {
                     transport.createTemporaryFile()
                 } else {
                     transport.toRemotePath(localPath)
                 }
                 paths[artifact.file.path] = remotePath
                 paths[localPath] = remotePath
-                if (artifact.kind == ToolArtifactKind.TEMPORARY_OUTPUT) temporaryPaths.add(remotePath)
+                if (artifact.kind == ToolArtifactKind.TEMPORARY_OUTPUT ||
+                    artifact.kind == ToolArtifactKind.INTERMEDIATE_OUTPUT
+                ) {
+                    temporaryPaths.add(remotePath)
+                }
             }
             return StagedArtifacts(paths, temporaryPaths)
         } catch (e: Exception) {
@@ -161,15 +175,20 @@ internal class LocalToolExecutionAdapter : ToolExecutionAdapter {
     }
 
     override fun execute(invocation: ToolInvocation, timeoutMs: Int, transferFiles: Boolean): ToolResult {
-        val commandLine = GeneralCommandLine(invocation.command)
-        invocation.workDir?.let { commandLine.workDirectory = it }
-        commandLine.charset = Charsets.UTF_8
-        return try {
-            val output = CapturingProcessHandler(commandLine).runProcess(timeoutMs)
-            ToolResult(output.exitCode, output.stdout, output.stderr, output.isTimeout)
-        } catch (e: Exception) {
-            ToolResult(-1, "", e.message ?: "Failed to start ${invocation.command.firstOrNull()}", false)
+        var result: ToolResult? = null
+        for (command in invocation.commands) {
+            val commandLine = GeneralCommandLine(command)
+            invocation.workDir?.let { commandLine.workDirectory = it }
+            commandLine.charset = Charsets.UTF_8
+            result = try {
+                val output = CapturingProcessHandler(commandLine).runProcess(timeoutMs)
+                ToolResult(output.exitCode, output.stdout, output.stderr, output.isTimeout)
+            } catch (e: Exception) {
+                ToolResult(-1, "", e.message ?: "Failed to start ${command.firstOrNull()}", false)
+            }
+            if (!result.success) return result
         }
+        return result ?: ToolResult(-1, "", "No command was provided", false)
     }
 
     override fun localPath(toolchainPath: String): String = toolchainPath

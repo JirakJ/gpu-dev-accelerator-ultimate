@@ -156,10 +156,79 @@ class RemoteToolExecutionAdapterTest {
         }
     }
 
+    @Test
+    fun `runs SASS pipeline in place and cleans without downloading intermediate cubin`() {
+        val source = Files.createTempFile("gpudev-source-", ".cu").toFile()
+        val cubin = Files.createTempFile("gpudev-cubin-", ".cubin").toFile()
+        val transport = RecordingTransport().apply {
+            commandResults.add(ToolResult(0, "cubin created", "", false))
+            commandResults.add(ToolResult(0, "disassembly output", "", false))
+        }
+        try {
+            val invocation = ToolInvocation(
+                command = listOf("nvcc", "-cubin", source.path, "-o", cubin.path),
+                workDir = source.parentFile,
+                artifacts = listOf(
+                    ToolArtifact(source, ToolArtifactKind.INPUT),
+                    ToolArtifact(cubin, ToolArtifactKind.INTERMEDIATE_OUTPUT)
+                ),
+                followUpCommands = listOf(listOf("nvdisasm", "--print-line-info", cubin.path))
+            )
+
+            val result = RemoteToolExecutionAdapter(transport).execute(invocation, 2_000, transferFiles = false)
+
+            assertTrue(result.success)
+            assertEquals("disassembly output", result.stdout)
+            assertEquals(
+                listOf(
+                    listOf("nvcc", "-cubin", transport.remote(source), "-o", transport.remoteTemporaryFile),
+                    listOf("nvdisasm", "--print-line-info", transport.remoteTemporaryFile)
+                ),
+                transport.commands
+            )
+            assertTrue(transport.downloaded.isEmpty())
+            assertEquals(listOf(transport.remoteTemporaryFile), transport.deleted)
+        } finally {
+            source.delete()
+            cubin.delete()
+        }
+    }
+
+    @Test
+    fun `stops SASS pipeline after compile failure and cleans intermediate cubin`() {
+        val source = Files.createTempFile("gpudev-source-", ".cu").toFile()
+        val cubin = Files.createTempFile("gpudev-cubin-", ".cubin").toFile()
+        val transport = RecordingTransport().apply {
+            result = ToolResult(1, "", "nvcc failed", false)
+        }
+        try {
+            val invocation = ToolInvocation(
+                command = listOf("nvcc", "-cubin", source.path, "-o", cubin.path),
+                artifacts = listOf(
+                    ToolArtifact(source, ToolArtifactKind.INPUT),
+                    ToolArtifact(cubin, ToolArtifactKind.INTERMEDIATE_OUTPUT)
+                ),
+                followUpCommands = listOf(listOf("nvdisasm", "--print-line-info", cubin.path))
+            )
+
+            val result = RemoteToolExecutionAdapter(transport).execute(invocation, 2_000, transferFiles = false)
+
+            assertFalse(result.success)
+            assertEquals(1, transport.commands.size)
+            assertTrue(transport.downloaded.isEmpty())
+            assertEquals(listOf(transport.remoteTemporaryFile), transport.deleted)
+        } finally {
+            source.delete()
+            cubin.delete()
+        }
+    }
+
     private class RecordingTransport : RemoteToolTransport {
         var command: List<String> = emptyList()
+        val commands = mutableListOf<List<String>>()
         var workDirectory: String? = null
         var result = ToolResult(0, "", "", false)
+        val commandResults = mutableListOf<ToolResult>()
         var transferNeeded = true
         val remoteTemporaryFile = "/remote/tmp/gpudev-test.ptx"
         val uploaded = mutableListOf<String>()
@@ -173,8 +242,9 @@ class RemoteToolExecutionAdapterTest {
 
         override fun run(command: List<String>, workDirectory: String?, timeoutMs: Int): ToolResult {
             this.command = command
+            commands.add(command)
             this.workDirectory = workDirectory
-            return result
+            return commandResults.getOrNull(commands.lastIndex) ?: result
         }
 
         override fun toRemotePath(localPath: String): String = remote(localPath)

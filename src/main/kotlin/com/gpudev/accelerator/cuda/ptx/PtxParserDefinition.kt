@@ -1,5 +1,7 @@
-package com.gpudev.accelerator.ptx
+package com.gpudev.accelerator.cuda.ptx
 
+import com.intellij.extapi.psi.ASTWrapperPsiElement
+import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.lang.PsiParser
@@ -30,9 +32,9 @@ class PtxParserDefinition : ParserDefinition {
     }
 }
 
-private class PtxPsiElement(node: ASTNode) : com.intellij.extapi.psi.ASTWrapperPsiElement(node)
+private class PtxPsiElement(node: ASTNode) : ASTWrapperPsiElement(node)
 
 private class PtxFile(viewProvider: FileViewProvider) :
-    com.intellij.extapi.psi.PsiFileBase(viewProvider, PtxLanguage) {
+    PsiFileBase(viewProvider, PtxLanguage) {
     override fun getFileType() = PtxFileType.INSTANCE
 }

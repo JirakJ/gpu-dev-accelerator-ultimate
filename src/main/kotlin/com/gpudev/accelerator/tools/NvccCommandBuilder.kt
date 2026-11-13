@@ -17,7 +17,10 @@ internal object NvccCommandBuilder {
         build(nvcc, "-c", source, output, options)
 
     fun ptx(nvcc: String, source: String, output: String, options: NvccCommandOptions): List<String> =
-        build(nvcc, "-ptx", source, output, options) + "-lineinfo"
+        build(nvcc, "-ptx", source, output, options) + LINE_INFO
+
+    fun cubin(nvcc: String, source: String, output: String, options: NvccCommandOptions): List<String> =
+        build(nvcc, "-cubin", source, output, options) + LINE_INFO
 
     private fun build(
         nvcc: String,
@@ -44,4 +47,5 @@ internal object NvccCommandBuilder {
         if (options.extraFlags.isNotBlank()) addAll(options.extraFlags.split(Regex("\\s+")))
     }
 
+    private const val LINE_INFO = "-lineinfo"
 }

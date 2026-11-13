@@ -24,6 +24,14 @@ object GpuToolchain {
     private val executionRouter = ToolExecutionRouter()
 
     fun nvcc(project: Project): String? = resolve(project, GpuDevSettings.getInstance().state.nvccPath, "nvcc")
+    fun nvdisasm(project: Project): String? {
+        resolve(project, "", "nvdisasm")?.let { return it }
+        val nvccPath = nvcc(project) ?: return null
+        val separator = maxOf(nvccPath.lastIndexOf('/'), nvccPath.lastIndexOf('\\'))
+        if (separator < 0) return null
+        val executable = if (nvccPath.endsWith(".exe", ignoreCase = true)) "nvdisasm.exe" else "nvdisasm"
+        return nvccPath.substring(0, separator + 1) + executable
+    }
     fun sanitizer(project: Project): String? =
         resolve(project, GpuDevSettings.getInstance().state.sanitizerPath, "compute-sanitizer", "cuda-memcheck")
     fun ncu(project: Project): String? = resolve(project, GpuDevSettings.getInstance().state.ncuPath, "ncu", "nvprof")

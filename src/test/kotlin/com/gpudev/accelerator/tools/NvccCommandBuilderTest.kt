@@ -45,6 +45,22 @@ class NvccCommandBuilderTest {
     }
 
     @Test
+    fun `cubin command keeps configured options and requests source line metadata`() {
+        assertEquals(
+            listOf(
+                "nvcc", "-cubin", "kernel.cu", "-o", "kernel.cubin", "-I", "/repo", "-arch=sm_86",
+                "--use_fast_math", "-lineinfo"
+            ),
+            NvccCommandBuilder.cubin(
+                "nvcc",
+                "kernel.cu",
+                "kernel.cubin",
+                NvccCommandOptions("sm_86", "--use_fast_math", listOf("/repo"))
+            )
+        )
+    }
+
+    @Test
     fun `ptx command keeps configured options and requests source line metadata`() {
         assertEquals(
             listOf(

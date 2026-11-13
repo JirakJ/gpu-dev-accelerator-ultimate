@@ -21,7 +21,7 @@ deterministic static analysis — no mock data.
 
 ### Toolchain integration (GPU Dev console, background tasks)
 - **Compile CUDA File** (Ctrl+Alt+C) — nvcc with configured `-arch`/flags, clickable errors
-- **Show PTX** — inspect the code nvcc actually generates for the current file
+- **Show Assembly** — inspect source-mapped SASS by default; enable PTX as a second pane
 - **Memory Check** (Ctrl+Alt+M) — compute-sanitizer (or cuda-memcheck) on an executable
 - **Profile Executable** (Ctrl+Shift+P) — Nsight Compute (`ncu`) or nvprof report
 - **GPU Information** — nvidia-smi device query + Apple GPUs via system_profiler

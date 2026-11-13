@@ -1,4 +1,4 @@
-package com.gpudev.accelerator.ptx
+package com.gpudev.accelerator.cuda.ptx
 
 import com.intellij.lexer.LexerBase
 import com.intellij.psi.TokenType
