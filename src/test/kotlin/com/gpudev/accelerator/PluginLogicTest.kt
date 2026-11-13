@@ -59,6 +59,7 @@ class PluginLogicTest {
         assertEquals("", state.sanitizerPath)
         assertEquals("", state.ncuPath)
         assertEquals(300, state.toolTimeoutSeconds)
+        assertFalse(state.transferRemoteFiles)
         val loaded = GpuDevSettings.State(nvccPath = "/usr/local/cuda/bin/nvcc", toolTimeoutSeconds = 10)
         settings.loadState(loaded)
         assertSame(loaded, settings.state)
