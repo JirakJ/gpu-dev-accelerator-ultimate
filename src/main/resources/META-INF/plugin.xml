@@ -87,9 +87,9 @@ Every feature is backed by a real tool integration or deterministic analysis —
         <!-- File Types -->
         <fileType name="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaFileType"
                   fieldName="INSTANCE" language="CUDA" extensions="cu;cuh"/>
-        <fileType name="PTX" implementationClass="com.gpudev.accelerator.ptx.PtxFileType"
+        <fileType name="PTX" implementationClass="com.gpudev.accelerator.cuda.ptx.PtxFileType"
                   fieldName="INSTANCE" language="PTX" extensions="ptx"/>
-        <fileType name="CUDA SASS" implementationClass="com.gpudev.accelerator.ptx.SassFileType"
+        <fileType name="CUDA SASS" implementationClass="com.gpudev.accelerator.cuda.sass.SassFileType"
                   fieldName="INSTANCE" language="CUDA_SASS" extensions="sassasm"/>
         <fileType name="Metal" implementationClass="com.gpudev.accelerator.metal.MetalFileType"
                   fieldName="INSTANCE" language="Metal" extensions="metal"/>
@@ -98,15 +98,15 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
         <!-- Languages -->
         <lang.parserDefinition language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaParserDefinition"/>
-        <lang.parserDefinition language="PTX" implementationClass="com.gpudev.accelerator.ptx.PtxParserDefinition"/>
-        <lang.parserDefinition language="CUDA_SASS" implementationClass="com.gpudev.accelerator.ptx.SassParserDefinition"/>
+        <lang.parserDefinition language="PTX" implementationClass="com.gpudev.accelerator.cuda.ptx.PtxParserDefinition"/>
+        <lang.parserDefinition language="CUDA_SASS" implementationClass="com.gpudev.accelerator.cuda.sass.SassParserDefinition"/>
         <lang.parserDefinition language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalParserDefinition"/>
         <lang.parserDefinition language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLParserDefinition"/>
 
         <!-- Syntax Highlighting -->
         <lang.syntaxHighlighterFactory language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaSyntaxHighlighterFactory"/>
-        <lang.syntaxHighlighterFactory language="PTX" implementationClass="com.gpudev.accelerator.ptx.PtxSyntaxHighlighterFactory"/>
-        <lang.syntaxHighlighterFactory language="CUDA_SASS" implementationClass="com.gpudev.accelerator.ptx.SassSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="PTX" implementationClass="com.gpudev.accelerator.cuda.ptx.PtxSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="CUDA_SASS" implementationClass="com.gpudev.accelerator.cuda.sass.SassSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLSyntaxHighlighterFactory"/>
 

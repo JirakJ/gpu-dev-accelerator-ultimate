@@ -1,4 +1,4 @@
-package com.gpudev.accelerator.ptx
+package com.gpudev.accelerator.cuda.sass
 
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType

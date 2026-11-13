@@ -1,4 +1,6 @@
-package com.gpudev.accelerator.ptx
+package com.gpudev.accelerator.cuda.sass
+
+import com.gpudev.accelerator.cuda.ptx.SourceLineReference
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue

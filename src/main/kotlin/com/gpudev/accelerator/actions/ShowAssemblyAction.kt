@@ -10,16 +10,16 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.gpudev.accelerator.cuda.CudaFileType
-import com.gpudev.accelerator.ptx.AssemblyComparisonData
-import com.gpudev.accelerator.ptx.AssemblyComparisonRequest
-import com.gpudev.accelerator.ptx.AssemblyOutputKind
-import com.gpudev.accelerator.ptx.AssemblyOutputLoadResult
-import com.gpudev.accelerator.ptx.AssemblyOutputLoader
-import com.gpudev.accelerator.ptx.AssemblyPaneData
-import com.gpudev.accelerator.ptx.PtxFileType
-import com.gpudev.accelerator.ptx.PtxGenerationService
-import com.gpudev.accelerator.ptx.SassFileType
-import com.gpudev.accelerator.ptx.SassGenerationService
+import com.gpudev.accelerator.cuda.ptx.AssemblyComparisonData
+import com.gpudev.accelerator.cuda.ptx.AssemblyComparisonRequest
+import com.gpudev.accelerator.cuda.ptx.AssemblyOutputKind
+import com.gpudev.accelerator.cuda.ptx.AssemblyOutputLoadResult
+import com.gpudev.accelerator.cuda.ptx.AssemblyOutputLoader
+import com.gpudev.accelerator.cuda.ptx.AssemblyPaneData
+import com.gpudev.accelerator.cuda.ptx.PtxFileType
+import com.gpudev.accelerator.cuda.ptx.PtxGenerationService
+import com.gpudev.accelerator.cuda.sass.SassFileType
+import com.gpudev.accelerator.cuda.sass.SassGenerationService
 import com.gpudev.accelerator.tools.GpuConsoleService
 import com.gpudev.accelerator.tools.GpuToolchain
 
