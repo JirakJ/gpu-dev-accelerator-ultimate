@@ -24,23 +24,19 @@ class VisualizeMultiGPUAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
-        val smi = GpuToolchain.nvidiaSmi()
-        if (smi == null) {
-            notifyNoGpus(project)
-            return
-        }
         GpuToolchain.inBackground(project, "Reading GPU topology", { _ ->
-            val devices = GpuToolchain.run(
+            val smi = GpuToolchain.nvidiaSmi(project) ?: return@inBackground null
+            val devices = GpuToolchain.run(project,
                 listOf(smi, "--query-gpu=index,name,memory.total,memory.used,utilization.gpu,temperature.gpu,power.draw",
                     "--format=csv,noheader,nounits")
             )
-            val matrix = GpuToolchain.run(listOf(smi, "topo", "-m"))
+            val matrix = GpuToolchain.run(project, listOf(smi, "topo", "-m"))
             GpuTopology(
                 nodes = GpuTopologyParser.parseDeviceQuery(devices.stdout),
                 links = GpuTopologyParser.parseTopologyMatrix(matrix.stdout)
             )
         }, { topology ->
-            if (topology.nodes.isEmpty()) {
+            if (topology == null || topology.nodes.isEmpty()) {
                 notifyNoGpus(project)
             } else {
                 TopologyDialog(project, topology).show()

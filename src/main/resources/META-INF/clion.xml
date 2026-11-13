@@ -1,0 +1,5 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Presence of this optional descriptor enables the CLion dependency classloader. -->
+    </extensions>
+</idea-plugin>

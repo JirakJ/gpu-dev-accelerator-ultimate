@@ -26,6 +26,9 @@ deterministic static analysis — no mock data.
 - **Profile Executable** (Ctrl+Shift+P) — Nsight Compute (`ncu`) or nvprof report
 - **GPU Information** — nvidia-smi device query + Apple GPUs via system_profiler
 - **Multi-GPU Topology** (Ctrl+Alt+G) — real link matrix from `nvidia-smi topo -m` with live utilization
+- **Remote execution** — in CLion every action above runs on the default SSH toolchain: local↔remote paths
+  are mapped through CLion's deployment settings, and plugin-managed uploads/downloads stay optional
+  (off by default for shared mounts and CLion-synchronized projects)
 
 ### Static analysis
 - Inspections: GPU memory leaks (cudaMalloc/cudaFree pairing), unchecked CUDA API calls
@@ -38,6 +41,7 @@ deterministic static analysis — no mock data.
 ## Requirements
 
 - Any IntelliJ-based IDE 2023.2 or newer (build 232+)
+- CLion 2023.2+ with a default SSH toolchain for remote execution (other IDEs run the tools locally)
 - NVIDIA CUDA Toolkit for compile/profile/sanitize features (`nvcc`, `compute-sanitizer`, `ncu` on PATH,
   or set paths in **Settings | Tools | GPU Dev Accelerator**)
 - macOS for Apple GPU detection

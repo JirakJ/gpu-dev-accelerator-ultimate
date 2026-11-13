@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+### Added
+- **Show Assembly (PTX)** for CUDA opens source and generated PTX side by side with source-line mapping and PTX syntax highlighting.
+- Remote tool execution through CLion's default SSH toolchain: **Compile CUDA File**, **Show PTX**, **Memory Check**, **Profile Executable**, **GPU Information** and **Multi-GPU Topology** now run on the remote host, with local↔remote paths mapped through CLion's deployment settings.
+- Opt-in plugin-managed remote file transfers (**Settings | Tools | GPU Dev Accelerator**) for setups without shared storage; off by default for shared mounts and CLion-synchronized projects.
+
+### Changed
+- Toolchain invocations go through local/remote execution adapters that stage artifacts explicitly: upload inputs, download outputs, clean up temporary files.
+- Compile and PTX commands pass the project root to nvcc as an include directory so repository-relative headers resolve.
+- Background tool failures are surfaced in the GPU Dev console and as a notification instead of being swallowed.
+
+### Fixed
+- Show PTX kept nvcc's stderr when the generated artifact could not be read, and the temporary `.ptx` file is now always removed.
+
 ## [2026.9.1] - 2026-11-12
 
 ### Removed

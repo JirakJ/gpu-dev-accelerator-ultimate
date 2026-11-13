@@ -8,16 +8,12 @@ import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileDocumentManager
-import com.intellij.openapi.fileTypes.PlainTextFileType
-import com.intellij.testFramework.LightVirtualFile
 import com.gpudev.accelerator.cuda.CudaFileType
-import com.gpudev.accelerator.settings.GpuDevSettings
+import com.gpudev.accelerator.ptx.PtxComparisonRequest
+import com.gpudev.accelerator.ptx.PtxGenerationService
 import com.gpudev.accelerator.tools.GpuConsoleService
 import com.gpudev.accelerator.tools.GpuToolchain
-import java.io.File
-import java.nio.file.Files
 
 /**
  * Compiles the current .cu file to PTX and opens the result in the editor —
@@ -36,38 +32,31 @@ class ShowPtxAction : AnAction() {
         val file = e.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
         if (file.fileType != CudaFileType.INSTANCE) return
         FileDocumentManager.getInstance().saveAllDocuments()
+        val sourceText = FileDocumentManager.getInstance().getDocument(file)?.text ?: return
 
-        val settings = GpuDevSettings.getInstance().state
         val filePath = file.path
-        GpuToolchain.inBackground(project, "Generating PTX for ${file.name}", { _ ->
-            val nvcc = GpuToolchain.nvcc() ?: return@inBackground null
-            val ptxFile = Files.createTempFile("gpudev-", ".ptx").toFile()
-            val command = buildList {
-                add(nvcc)
-                add("-ptx")
-                add(filePath)
-                add("-o")
-                add(ptxFile.absolutePath)
-                if (settings.gpuArch.isNotBlank()) add("-arch=${settings.gpuArch}")
-                if (settings.extraNvccFlags.isNotBlank()) addAll(settings.extraNvccFlags.split(Regex("\\s+")))
-            }
-            val result = GpuToolchain.run(command, File(filePath).parentFile)
-            val ptx = if (result.success && ptxFile.exists()) ptxFile.readText() else null
-            ptxFile.delete()
-            Triple(command, result, ptx)
-        }, { triple ->
-            if (triple == null) {
+        val fileName = file.name
+        GpuConsoleService.getInstance(project)
+            .print("Generating PTX for $fileName", "Starting nvcc -ptx… (see Progress for status)")
+        GpuToolchain.inBackground(project, "Generating PTX for $fileName", { _ ->
+            PtxGenerationService.generate(project, filePath)
+        }, { generation ->
+            if (generation == null) {
                 CompileCudaAction.notifyMissingNvcc(project)
                 return@inBackground
             }
-            val (command, result, ptx) = triple
+            val ptx = generation.ptxText
             if (ptx != null) {
-                val ptxVirtualFile = LightVirtualFile("${file.nameWithoutExtension}.ptx", PlainTextFileType.INSTANCE, ptx)
-                FileEditorManager.getInstance(project).openFile(ptxVirtualFile, true)
+                val mappings = PtxGenerationService.sourceMappings(project, filePath, ptx)
+                PtxComparisonRequest.show(project, fileName, sourceText, ptx, mappings)
             } else {
-                GpuConsoleService.getInstance(project)
-                    .print("nvcc -ptx: ${command.joinToString(" ")}", result.combined, error = true)
+                GpuConsoleService.getInstance(project).print(
+                    "nvcc -ptx: ${generation.command.joinToString(" ")}",
+                    generation.result.combined,
+                    error = true
+                )
             }
         })
     }
+
 }
