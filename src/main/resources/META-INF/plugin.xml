@@ -21,7 +21,8 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
 <h3>Toolchain Integration</h3>
 <ul>
-  <li>Compile CUDA files with nvcc in the background — errors clickable in the GPU Dev console</li>
+  <li>Compile CUDA files locally or through CLion's default remote SSH toolchain —
+      errors clickable in the GPU Dev console</li>
   <li>Show PTX for the current file to inspect generated code</li>
   <li>Memory checking via compute-sanitizer (or cuda-memcheck)</li>
   <li>Kernel profiling via Nsight Compute (ncu) or nvprof</li>
@@ -79,6 +80,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="clion.xml">com.intellij.clion</depends>
 
 
     <extensions defaultExtensionNs="com.intellij">

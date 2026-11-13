@@ -27,7 +27,8 @@ class GpuDevSettings : PersistentStateComponent<GpuDevSettings.State> {
         var extraNvccFlags: String = "",
         var sanitizerPath: String = "",
         var ncuPath: String = "",
-        var toolTimeoutSeconds: Int = 300
+        var toolTimeoutSeconds: Int = 300,
+        var transferRemoteFiles: Boolean = false
     )
 
     private var myState = State()
