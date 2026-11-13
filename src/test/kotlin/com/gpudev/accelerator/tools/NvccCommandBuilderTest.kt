@@ -45,9 +45,25 @@ class NvccCommandBuilderTest {
     }
 
     @Test
+    fun `ptx command keeps configured options and requests source line metadata`() {
+        assertEquals(
+            listOf(
+                "nvcc", "-ptx", "kernel.cu", "-o", "kernel.ptx", "-I", "/repo", "-arch=sm_90",
+                "--use_fast_math", "-lineinfo"
+            ),
+            NvccCommandBuilder.ptx(
+                "nvcc",
+                "kernel.cu",
+                "kernel.ptx",
+                NvccCommandOptions("sm_90", "--use_fast_math", listOf("/repo"))
+            )
+        )
+    }
+
+    @Test
     fun `ptx command omits empty options and keeps remote output path`() {
         assertEquals(
-            listOf("nvcc", "-ptx", "/remote/project/kernel.cu", "-o", "/remote/tmp/kernel.ptx"),
+            listOf("nvcc", "-ptx", "/remote/project/kernel.cu", "-o", "/remote/tmp/kernel.ptx", "-lineinfo"),
             NvccCommandBuilder.ptx(
                 "nvcc",
                 "/remote/project/kernel.cu",

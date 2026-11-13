@@ -17,7 +17,7 @@ internal object NvccCommandBuilder {
         build(nvcc, "-c", source, output, options)
 
     fun ptx(nvcc: String, source: String, output: String, options: NvccCommandOptions): List<String> =
-        build(nvcc, "-ptx", source, output, options)
+        build(nvcc, "-ptx", source, output, options) + "-lineinfo"
 
     private fun build(
         nvcc: String,

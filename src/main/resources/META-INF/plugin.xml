@@ -23,7 +23,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
 <ul>
   <li>Compile CUDA files locally or through CLion's default remote SSH toolchain —
       errors clickable in the GPU Dev console</li>
-  <li>Show PTX for the current file to inspect generated code</li>
+  <li>Show CUDA Assembly (PTX) beside its source with generated-line mapping</li>
   <li>Memory checking via compute-sanitizer (or cuda-memcheck)</li>
   <li>Kernel profiling via Nsight Compute (ncu) or nvprof</li>
   <li>GPU inventory from nvidia-smi and system_profiler (Apple GPUs)</li>
@@ -87,6 +87,8 @@ Every feature is backed by a real tool integration or deterministic analysis —
         <!-- File Types -->
         <fileType name="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaFileType"
                   fieldName="INSTANCE" language="CUDA" extensions="cu;cuh"/>
+        <fileType name="PTX" implementationClass="com.gpudev.accelerator.ptx.PtxFileType"
+                  fieldName="INSTANCE" language="PTX" extensions="ptx"/>
         <fileType name="Metal" implementationClass="com.gpudev.accelerator.metal.MetalFileType"
                   fieldName="INSTANCE" language="Metal" extensions="metal"/>
         <fileType name="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLFileType"
@@ -94,11 +96,13 @@ Every feature is backed by a real tool integration or deterministic analysis —
 
         <!-- Languages -->
         <lang.parserDefinition language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaParserDefinition"/>
+        <lang.parserDefinition language="PTX" implementationClass="com.gpudev.accelerator.ptx.PtxParserDefinition"/>
         <lang.parserDefinition language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalParserDefinition"/>
         <lang.parserDefinition language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLParserDefinition"/>
 
         <!-- Syntax Highlighting -->
         <lang.syntaxHighlighterFactory language="CUDA" implementationClass="com.gpudev.accelerator.cuda.CudaSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="PTX" implementationClass="com.gpudev.accelerator.ptx.PtxSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="Metal" implementationClass="com.gpudev.accelerator.metal.MetalSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="OpenCL" implementationClass="com.gpudev.accelerator.opencl.OpenCLSyntaxHighlighterFactory"/>
 
@@ -178,7 +182,9 @@ Every feature is backed by a real tool integration or deterministic analysis —
             </action>
 
             <action id="GPUDev.ShowPtx" class="com.gpudev.accelerator.actions.ShowPtxAction"
-                    text="Show PTX" description="Compile the current CUDA file to PTX and open it"/>
+                    text="Show Assembly (PTX)" description="Compare CUDA source with generated PTX assembly">
+                <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            </action>
 
             <action id="GPUDev.ShowGPUInfo" class="com.gpudev.accelerator.actions.ShowGPUInfoAction"
                     text="GPU Information" description="Show detected GPU devices and toolchain versions"/>

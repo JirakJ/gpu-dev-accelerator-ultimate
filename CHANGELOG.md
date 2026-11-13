@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- **Show Assembly (PTX)** for CUDA opens source and generated PTX side by side with source-line mapping and PTX syntax highlighting.
 - Remote tool execution through CLion's default SSH toolchain: **Compile CUDA File**, **Show PTX**, **Memory Check**, **Profile Executable**, **GPU Information** and **Multi-GPU Topology** now run on the remote host, with local↔remote paths mapped through CLion's deployment settings.
 - Opt-in plugin-managed remote file transfers (**Settings | Tools | GPU Dev Accelerator**) for setups without shared storage; off by default for shared mounts and CLion-synchronized projects.
 
