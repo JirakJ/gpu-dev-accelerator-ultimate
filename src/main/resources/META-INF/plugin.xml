@@ -35,7 +35,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
 <ul>
   <li>Inspections: GPU memory leaks (cudaMalloc without cudaFree), unchecked CUDA API calls with a CUDA_CHECK quick fix, kernel performance heuristics</li>
   <li>Kernel heuristics: strided access, warp divergence, __syncthreads() in divergent branches, missing bounds checks, missing __restrict__, device-side malloc, and more</li>
-  <li>Theoretical occupancy calculator for Volta through Hopper</li>
+  <li>Theoretical occupancy calculator for Volta through Blackwell</li>
   <li>Cross-platform kernel migration starting points (CUDA ⇄ Metal / OpenCL / HIP)</li>
 </ul>
 
@@ -63,7 +63,7 @@ Every feature is backed by a real tool integration or deterministic analysis —
         <ul>
             <li><b>Real toolchain integration</b> — nvcc compilation now runs in the background with clickable errors in the new GPU Dev console; no more UI freezes or modal dialogs</li>
             <li><b>New: Show PTX</b> — compile the current .cu file to PTX and inspect the generated code in the editor</li>
-            <li><b>New: Occupancy calculator</b> — theoretical SM occupancy for Volta through Hopper with limiting-factor breakdown</li>
+            <li><b>New: Occupancy calculator</b> — theoretical SM occupancy for Volta through Blackwell with limiting-factor breakdown</li>
             <li><b>New: Migrate Kernel action</b> — CUDA ⇄ Metal/OpenCL/HIP source porting starting points</li>
             <li><b>New: editor basics</b> — Ctrl+/ commenting, brace matching, 8 live templates, quick documentation for 100+ GPU builtins</li>
             <li><b>Real inspections</b> — memory-leak and unchecked-API-call inspections now report problems in the editor; quick fix wraps calls in CUDA_CHECK</li>

@@ -27,7 +27,9 @@ object OccupancyCalculator {
         DeviceSpec("Ampere (A100) — CC 8.0", "8.0", 2048, 32, 65536, 164 * 1024),
         DeviceSpec("Ampere (RTX 30xx) — CC 8.6", "8.6", 1536, 16, 65536, 100 * 1024),
         DeviceSpec("Ada (RTX 40xx) — CC 8.9", "8.9", 1536, 24, 65536, 100 * 1024),
-        DeviceSpec("Hopper (H100) — CC 9.0", "9.0", 2048, 32, 65536, 228 * 1024)
+        DeviceSpec("Hopper (H100) — CC 9.0", "9.0", 2048, 32, 65536, 228 * 1024),
+        DeviceSpec("Blackwell (B200/GB200) — CC 10.0", "10.0", 2048, 32, 65536, 228 * 1024),
+        DeviceSpec("Blackwell (RTX 50xx) — CC 12.0", "12.0", 1536, 24, 65536, 100 * 1024)
     )
 
     data class Result(

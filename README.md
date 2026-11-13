@@ -35,7 +35,7 @@ deterministic static analysis — no mock data.
   (with a **Wrap in CUDA_CHECK** quick fix), kernel performance heuristics
 - **Analyze Kernel** (Ctrl+Alt+O) — strided access, warp divergence, `__syncthreads()` in
   divergent branches, missing bounds checks, missing `__restrict__`, device-side malloc, and more
-- **Occupancy Calculator** — theoretical SM occupancy for CC 7.0–9.0 with limiting-factor breakdown
+- **Occupancy Calculator** — theoretical SM occupancy for CC 7.0–12.0 with limiting-factor breakdown
 - **Migrate Kernel** — CUDA ⇄ Metal / OpenCL / HIP source-port starting points
 
 ## Requirements
